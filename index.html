@@ -788,18 +788,32 @@ function detenerCapturaVoz(){
   procesarComandoVoz(texto);
 }
 
-function procesarComandoVoz(texto){
+function segmentarMovimientosVoz(texto){
+  const disparador=/(?=\b(?:gast[eé]|pagu[eé]|compr[eé]|recib[ií]|cobr[eé]|gan[eé]|ingres[eé]|vend[ií]|me\s+pagaron|me\s+depositaron|me\s+dieron|un\s+gasto\s+de|un\s+ingreso\s+de|tuve\s+un\s+gasto|tuve\s+un\s+ingreso))/gi;
+  let segmentos=texto.split(disparador).map(s=>s.trim()).filter(Boolean);
+  if(segmentos.length===0) segmentos=[texto.trim()];
+
+  const conector=/\s*(?:,\s*|;\s*)?\b(?:y también|también|y además|además|y luego|luego|y después|después|y aparte|aparte)\b\s*/i;
+  const resultado=[];
+  segmentos.forEach(seg=>{
+    const numeros=seg.match(/\d+(?:[.,]\d+)?/g)||[];
+    if(numeros.length>1 && conector.test(seg)){
+      seg.split(conector).map(s=>s.trim()).filter(Boolean).forEach(s=>resultado.push(s));
+    } else {
+      resultado.push(seg);
+    }
+  });
+  return resultado;
+}
+
+function interpretarSegmentoVoz(texto){
   const lower=texto.toLowerCase();
 
   const ingresoKeywords=["ingreso","ingresé","ingrese","recibí","recibi","me pagaron","cobré","cobre","gané","gane","depósito","deposito","me depositaron"];
   const tipo = ingresoKeywords.some(k=>lower.includes(k)) ? "ingreso" : "gasto";
 
   const montoMatch=lower.match(/(\d+(?:[.,]\d+)?)/);
-  if(!montoMatch){
-    document.getElementById("f-nota").value=texto;
-    toast(`No pude detectar el monto en "${texto}". Complétalo a mano.`);
-    return;
-  }
+  if(!montoMatch) return null;
   const monto=parseFloat(montoMatch[1].replace(",","."));
 
   const hoy=new Date();
@@ -842,17 +856,38 @@ function procesarComandoVoz(texto){
   }
   if(!categoriaId) categoriaId = tipo==="gasto" ? "otros" : "ingreso-otros";
   if(!catById(categoriaId)) categoriaId = categoriasDelTipo[0] ? categoriasDelTipo[0].id : null;
-  if(!categoriaId){
-    toast("No hay categorías configuradas para ese tipo de movimiento.");
+  if(!categoriaId) return null;
+
+  return { id:uid(), tipo, fecha, monto, categoriaId, nota:texto.trim() };
+}
+
+function procesarComandoVoz(texto){
+  const segmentos=segmentarMovimientosVoz(texto);
+  const candidatos=segmentos.filter(seg=>/\d/.test(seg));
+  const agregados=[];
+  candidatos.forEach(seg=>{
+    const mov=interpretarSegmentoVoz(seg);
+    if(mov) agregados.push(mov);
+  });
+
+  if(agregados.length===0){
+    document.getElementById("f-nota").value=texto;
+    toast(`No pude detectar montos en "${texto}". Complétalo a mano.`);
     return;
   }
 
-  movimientos.push({ id:uid(), tipo, fecha, monto, categoriaId, nota:texto });
+  agregados.forEach(mov=>movimientos.push(mov));
   Storage.setMovimientos(movimientos);
   render();
 
-  const cat=catById(categoriaId);
-  toast(`Agregado por voz: ${tipo==="ingreso"?"Ingreso":"Gasto"} de ${formatMoney(monto)} en ${cat.nombre} (${fecha})`);
+  if(agregados.length===1){
+    const m=agregados[0];
+    const cat=catById(m.categoriaId);
+    toast(`Agregado por voz: ${m.tipo==="ingreso"?"Ingreso":"Gasto"} de ${formatMoney(m.monto)} en ${cat.nombre} (${m.fecha})`);
+  } else {
+    const faltantes=candidatos.length-agregados.length;
+    toast(`Agregados ${agregados.length} movimientos por voz`+(faltantes>0?` (${faltantes} no se entendieron)`:""));
+  }
 }
 
 /* ===== State ===== */
