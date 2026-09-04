@@ -293,6 +293,7 @@ input,select,button{font-family:inherit;font-size:14px;}
 .overdue-item{cursor:pointer;}
 .pend-text-readonly{flex:1;font-size:14px;color:var(--text);}
 .overdue-date{display:block;font-size:11px;font-weight:700;color:var(--expense);text-transform:capitalize;margin-bottom:1px;}
+.upcoming-date{display:block;font-size:11px;font-weight:700;color:var(--primary);text-transform:capitalize;margin-bottom:1px;}
 
 /* ===== Table ===== */
 .table-header{display:flex;justify-content:space-between;align-items:center;}
@@ -542,6 +543,11 @@ td.nota{white-space:normal;color:var(--text-muted);max-width:220px;}
       <section class="card">
         <h3>Pendientes atrasados</h3>
         <ul class="pend-list" id="overdue-list"></ul>
+      </section>
+
+      <section class="card">
+        <h3>Pendientes próximos</h3>
+        <ul class="pend-list" id="upcoming-list"></ul>
       </section>
     </div>
   </div>
@@ -1539,9 +1545,34 @@ function renderOverdue(){
   }).join("");
 }
 
+function renderUpcoming(){
+  const hoy=toISODate(new Date());
+  const proximos=pendientes.filter(p=>!p.hecho && p.fecha>hoy).sort((a,b)=>a.fecha.localeCompare(b.fecha));
+  const list=document.getElementById("upcoming-list");
+  if(proximos.length===0){
+    list.innerHTML=`<li class="pend-empty">No tienes pendientes planeados a futuro.</li>`;
+    return;
+  }
+  list.innerHTML=proximos.map(p=>{
+    const d=parseDate(p.fecha);
+    const dayAbbr=capitalize(d.toLocaleDateString("es-ES",{weekday:"short"})).replace(".","");
+    const month=capitalize(d.toLocaleDateString("es-ES",{month:"short"})).replace(".","");
+    return `<li class="pend-item overdue-item" data-fecha="${p.fecha}">
+      <button type="button" class="pend-check" data-id="${p.id}" aria-label="Marcar como hecho">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </button>
+      <span class="pend-text-readonly">
+        <span class="upcoming-date">${dayAbbr} ${d.getDate()} ${month}</span>
+        ${escapeHtml(p.texto)}
+      </span>
+    </li>`;
+  }).join("");
+}
+
 function renderPendientes(){
   renderWeekOverview();
   renderOverdue();
+  renderUpcoming();
 
   document.getElementById("pend-label").textContent = formatDayLabel(parseDate(pendState.fecha));
 
@@ -1589,6 +1620,17 @@ function bindPendientesEvents(){
   });
 
   document.getElementById("overdue-list").addEventListener("click",(e)=>{
+    const checkBtn=e.target.closest(".pend-check");
+    if(checkBtn){
+      const p=pendientes.find(x=>x.id===checkBtn.dataset.id);
+      if(p){ p.hecho=true; Storage.setPendientes(pendientes); renderPendientes(); toast("Pendiente completado"); }
+      return;
+    }
+    const li=e.target.closest("li[data-fecha]");
+    if(li){ pendState.fecha=li.dataset.fecha; renderPendientes(); }
+  });
+
+  document.getElementById("upcoming-list").addEventListener("click",(e)=>{
     const checkBtn=e.target.closest(".pend-check");
     if(checkBtn){
       const p=pendientes.find(x=>x.id===checkBtn.dataset.id);
