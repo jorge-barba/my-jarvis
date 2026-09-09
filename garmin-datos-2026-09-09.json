@@ -1,0 +1,2070 @@
+{
+  "version": 1,
+  "actualizadoEn": "2026-09-09T00:00:00.000Z",
+  "meta": {
+    "alturaCm": 172,
+    "pesoKg": 65,
+    "vo2maxAutoreportado": 42,
+    "maxHrReferencia": 205
+  },
+  "carga": [
+    {
+      "fecha": "2025-12-09",
+      "ctl": 219,
+      "atl": 164,
+      "tsb": 55
+    },
+    {
+      "fecha": "2025-12-10",
+      "ctl": 219,
+      "atl": 181,
+      "tsb": 38
+    },
+    {
+      "fecha": "2025-12-11",
+      "ctl": 219,
+      "atl": 286,
+      "tsb": -67
+    },
+    {
+      "fecha": "2025-12-12",
+      "ctl": 219,
+      "atl": 253,
+      "tsb": -34
+    },
+    {
+      "fecha": "2025-12-13",
+      "ctl": 219,
+      "atl": 220,
+      "tsb": -1
+    },
+    {
+      "fecha": "2025-12-14",
+      "ctl": 219,
+      "atl": 187,
+      "tsb": 32
+    },
+    {
+      "fecha": "2025-12-15",
+      "ctl": 219,
+      "atl": 154,
+      "tsb": 65
+    },
+    {
+      "fecha": "2025-12-16",
+      "ctl": 219,
+      "atl": 121,
+      "tsb": 98
+    },
+    {
+      "fecha": "2025-12-17",
+      "ctl": 219,
+      "atl": 87,
+      "tsb": 132
+    },
+    {
+      "fecha": "2025-12-18",
+      "ctl": 219,
+      "atl": 211,
+      "tsb": 8
+    },
+    {
+      "fecha": "2025-12-19",
+      "ctl": 219,
+      "atl": 236,
+      "tsb": -17
+    },
+    {
+      "fecha": "2025-12-20",
+      "ctl": 219,
+      "atl": 197,
+      "tsb": 22
+    },
+    {
+      "fecha": "2025-12-21",
+      "ctl": 219,
+      "atl": 163,
+      "tsb": 56
+    },
+    {
+      "fecha": "2025-12-22",
+      "ctl": 219,
+      "atl": 140,
+      "tsb": 79
+    },
+    {
+      "fecha": "2025-12-23",
+      "ctl": 219,
+      "atl": 118,
+      "tsb": 101
+    },
+    {
+      "fecha": "2025-12-24",
+      "ctl": 219,
+      "atl": 96,
+      "tsb": 123
+    },
+    {
+      "fecha": "2025-12-25",
+      "ctl": 219,
+      "atl": 73,
+      "tsb": 146
+    },
+    {
+      "fecha": "2025-12-26",
+      "ctl": 176,
+      "atl": 221,
+      "tsb": -45
+    },
+    {
+      "fecha": "2025-12-27",
+      "ctl": 176,
+      "atl": 182,
+      "tsb": -6
+    },
+    {
+      "fecha": "2025-12-28",
+      "ctl": 176,
+      "atl": 143,
+      "tsb": 33
+    },
+    {
+      "fecha": "2025-12-29",
+      "ctl": 176,
+      "atl": 119,
+      "tsb": 57
+    },
+    {
+      "fecha": "2025-12-30",
+      "ctl": 176,
+      "atl": 102,
+      "tsb": 74
+    },
+    {
+      "fecha": "2025-12-31",
+      "ctl": 176,
+      "atl": 85,
+      "tsb": 91
+    },
+    {
+      "fecha": "2026-01-01",
+      "ctl": 176,
+      "atl": 68,
+      "tsb": 108
+    },
+    {
+      "fecha": "2026-01-02",
+      "ctl": 176,
+      "atl": 51,
+      "tsb": 125
+    },
+    {
+      "fecha": "2026-01-03",
+      "ctl": 176,
+      "atl": 34,
+      "tsb": 142
+    },
+    {
+      "fecha": "2026-01-04",
+      "ctl": 176,
+      "atl": 17,
+      "tsb": 159
+    },
+    {
+      "fecha": "2026-01-05",
+      "ctl": 176,
+      "atl": 0,
+      "tsb": 176
+    },
+    {
+      "fecha": "2026-01-13",
+      "ctl": 176,
+      "atl": 54,
+      "tsb": 122
+    },
+    {
+      "fecha": "2026-01-14",
+      "ctl": 176,
+      "atl": 321,
+      "tsb": -145
+    },
+    {
+      "fecha": "2026-01-15",
+      "ctl": 176,
+      "atl": 322,
+      "tsb": -146
+    },
+    {
+      "fecha": "2026-01-16",
+      "ctl": 176,
+      "atl": 286,
+      "tsb": -110
+    },
+    {
+      "fecha": "2026-01-17",
+      "ctl": 176,
+      "atl": 250,
+      "tsb": -74
+    },
+    {
+      "fecha": "2026-01-18",
+      "ctl": 176,
+      "atl": 214,
+      "tsb": -38
+    },
+    {
+      "fecha": "2026-01-19",
+      "ctl": 176,
+      "atl": 209,
+      "tsb": -33
+    },
+    {
+      "fecha": "2026-01-20",
+      "ctl": 176,
+      "atl": 170,
+      "tsb": 6
+    },
+    {
+      "fecha": "2026-01-21",
+      "ctl": 176,
+      "atl": 135,
+      "tsb": 41
+    },
+    {
+      "fecha": "2026-01-22",
+      "ctl": 176,
+      "atl": 153,
+      "tsb": 23
+    },
+    {
+      "fecha": "2026-01-23",
+      "ctl": 176,
+      "atl": 108,
+      "tsb": 68
+    },
+    {
+      "fecha": "2026-01-24",
+      "ctl": 176,
+      "atl": 68,
+      "tsb": 108
+    },
+    {
+      "fecha": "2026-01-25",
+      "ctl": 176,
+      "atl": 55,
+      "tsb": 121
+    },
+    {
+      "fecha": "2026-01-26",
+      "ctl": 176,
+      "atl": 46,
+      "tsb": 130
+    },
+    {
+      "fecha": "2026-01-27",
+      "ctl": 176,
+      "atl": 59,
+      "tsb": 117
+    },
+    {
+      "fecha": "2026-01-28",
+      "ctl": 219,
+      "atl": 215,
+      "tsb": 4
+    },
+    {
+      "fecha": "2026-01-29",
+      "ctl": 219,
+      "atl": 194,
+      "tsb": 25
+    },
+    {
+      "fecha": "2026-01-30",
+      "ctl": 219,
+      "atl": 368,
+      "tsb": -149
+    },
+    {
+      "fecha": "2026-01-31",
+      "ctl": 219,
+      "atl": 322,
+      "tsb": -103
+    },
+    {
+      "fecha": "2026-02-01",
+      "ctl": 219,
+      "atl": 276,
+      "tsb": -57
+    },
+    {
+      "fecha": "2026-02-02",
+      "ctl": 219,
+      "atl": 356,
+      "tsb": -137
+    },
+    {
+      "fecha": "2026-02-03",
+      "ctl": 219,
+      "atl": 304,
+      "tsb": -85
+    },
+    {
+      "fecha": "2026-02-04",
+      "ctl": 219,
+      "atl": 253,
+      "tsb": -34
+    },
+    {
+      "fecha": "2026-02-05",
+      "ctl": 219,
+      "atl": 292,
+      "tsb": -73
+    },
+    {
+      "fecha": "2026-02-06",
+      "ctl": 233,
+      "atl": 410,
+      "tsb": -177
+    },
+    {
+      "fecha": "2026-02-07",
+      "ctl": 234,
+      "atl": 334,
+      "tsb": -100
+    },
+    {
+      "fecha": "2026-02-08",
+      "ctl": 257,
+      "atl": 413,
+      "tsb": -156
+    },
+    {
+      "fecha": "2026-02-09",
+      "ctl": 258,
+      "atl": 353,
+      "tsb": -95
+    },
+    {
+      "fecha": "2026-02-10",
+      "ctl": 259,
+      "atl": 328,
+      "tsb": -69
+    },
+    {
+      "fecha": "2026-02-11",
+      "ctl": 257,
+      "atl": 283,
+      "tsb": -26
+    },
+    {
+      "fecha": "2026-02-12",
+      "ctl": 255,
+      "atl": 236,
+      "tsb": 19
+    },
+    {
+      "fecha": "2026-02-13",
+      "ctl": 258,
+      "atl": 241,
+      "tsb": 17
+    },
+    {
+      "fecha": "2026-02-14",
+      "ctl": 252,
+      "atl": 188,
+      "tsb": 64
+    },
+    {
+      "fecha": "2026-02-15",
+      "ctl": 246,
+      "atl": 136,
+      "tsb": 110
+    },
+    {
+      "fecha": "2026-02-16",
+      "ctl": 241,
+      "atl": 110,
+      "tsb": 131
+    },
+    {
+      "fecha": "2026-02-17",
+      "ctl": 242,
+      "atl": 144,
+      "tsb": 98
+    },
+    {
+      "fecha": "2026-02-18",
+      "ctl": 257,
+      "atl": 249,
+      "tsb": 8
+    },
+    {
+      "fecha": "2026-02-19",
+      "ctl": 251,
+      "atl": 227,
+      "tsb": 24
+    },
+    {
+      "fecha": "2026-02-20",
+      "ctl": 259,
+      "atl": 284,
+      "tsb": -25
+    },
+    {
+      "fecha": "2026-02-21",
+      "ctl": 251,
+      "atl": 245,
+      "tsb": 6
+    },
+    {
+      "fecha": "2026-02-22",
+      "ctl": 243,
+      "atl": 206,
+      "tsb": 37
+    },
+    {
+      "fecha": "2026-02-23",
+      "ctl": 235,
+      "atl": 169,
+      "tsb": 66
+    },
+    {
+      "fecha": "2026-02-24",
+      "ctl": 226,
+      "atl": 137,
+      "tsb": 89
+    },
+    {
+      "fecha": "2026-02-25",
+      "ctl": 219,
+      "atl": 105,
+      "tsb": 114
+    },
+    {
+      "fecha": "2026-02-26",
+      "ctl": 219,
+      "atl": 73,
+      "tsb": 146
+    },
+    {
+      "fecha": "2026-02-27",
+      "ctl": 219,
+      "atl": 43,
+      "tsb": 176
+    },
+    {
+      "fecha": "2026-02-28",
+      "ctl": 219,
+      "atl": 19,
+      "tsb": 200
+    },
+    {
+      "fecha": "2026-03-01",
+      "ctl": 219,
+      "atl": 9,
+      "tsb": 210
+    },
+    {
+      "fecha": "2026-03-02",
+      "ctl": 219,
+      "atl": 56,
+      "tsb": 163
+    },
+    {
+      "fecha": "2026-03-03",
+      "ctl": 219,
+      "atl": 109,
+      "tsb": 110
+    },
+    {
+      "fecha": "2026-03-04",
+      "ctl": 219,
+      "atl": 315,
+      "tsb": -96
+    },
+    {
+      "fecha": "2026-03-05",
+      "ctl": 219,
+      "atl": 326,
+      "tsb": -107
+    },
+    {
+      "fecha": "2026-03-06",
+      "ctl": 206,
+      "atl": 386,
+      "tsb": -180
+    },
+    {
+      "fecha": "2026-03-07",
+      "ctl": 200,
+      "atl": 341,
+      "tsb": -141
+    },
+    {
+      "fecha": "2026-03-08",
+      "ctl": 194,
+      "atl": 294,
+      "tsb": -100
+    },
+    {
+      "fecha": "2026-03-09",
+      "ctl": 188,
+      "atl": 249,
+      "tsb": -61
+    },
+    {
+      "fecha": "2026-03-10",
+      "ctl": 191,
+      "atl": 243,
+      "tsb": -52
+    },
+    {
+      "fecha": "2026-03-11",
+      "ctl": 191,
+      "atl": 219,
+      "tsb": -28
+    },
+    {
+      "fecha": "2026-03-12",
+      "ctl": 194,
+      "atl": 202,
+      "tsb": -8
+    },
+    {
+      "fecha": "2026-03-13",
+      "ctl": 191,
+      "atl": 159,
+      "tsb": 32
+    },
+    {
+      "fecha": "2026-03-14",
+      "ctl": 188,
+      "atl": 111,
+      "tsb": 77
+    },
+    {
+      "fecha": "2026-03-15",
+      "ctl": 181,
+      "atl": 84,
+      "tsb": 97
+    },
+    {
+      "fecha": "2026-03-16",
+      "ctl": 176,
+      "atl": 62,
+      "tsb": 114
+    },
+    {
+      "fecha": "2026-03-17",
+      "ctl": 176,
+      "atl": 50,
+      "tsb": 126
+    },
+    {
+      "fecha": "2026-03-18",
+      "ctl": 176,
+      "atl": 46,
+      "tsb": 130
+    },
+    {
+      "fecha": "2026-03-19",
+      "ctl": 176,
+      "atl": 50,
+      "tsb": 126
+    },
+    {
+      "fecha": "2026-03-20",
+      "ctl": 176,
+      "atl": 48,
+      "tsb": 128
+    },
+    {
+      "fecha": "2026-03-21",
+      "ctl": 176,
+      "atl": 36,
+      "tsb": 140
+    },
+    {
+      "fecha": "2026-03-22",
+      "ctl": 176,
+      "atl": 28,
+      "tsb": 148
+    },
+    {
+      "fecha": "2026-03-23",
+      "ctl": 176,
+      "atl": 60,
+      "tsb": 116
+    },
+    {
+      "fecha": "2026-03-24",
+      "ctl": 176,
+      "atl": 93,
+      "tsb": 83
+    },
+    {
+      "fecha": "2026-03-25",
+      "ctl": 176,
+      "atl": 96,
+      "tsb": 80
+    },
+    {
+      "fecha": "2026-03-26",
+      "ctl": 176,
+      "atl": 83,
+      "tsb": 93
+    },
+    {
+      "fecha": "2026-03-27",
+      "ctl": 176,
+      "atl": 70,
+      "tsb": 106
+    },
+    {
+      "fecha": "2026-03-28",
+      "ctl": 176,
+      "atl": 57,
+      "tsb": 119
+    },
+    {
+      "fecha": "2026-03-29",
+      "ctl": 176,
+      "atl": 45,
+      "tsb": 131
+    },
+    {
+      "fecha": "2026-03-30",
+      "ctl": 176,
+      "atl": 35,
+      "tsb": 141
+    },
+    {
+      "fecha": "2026-03-31",
+      "ctl": 137,
+      "atl": 221,
+      "tsb": -84
+    },
+    {
+      "fecha": "2026-04-01",
+      "ctl": 137,
+      "atl": 197,
+      "tsb": -60
+    },
+    {
+      "fecha": "2026-04-02",
+      "ctl": 137,
+      "atl": 168,
+      "tsb": -31
+    },
+    {
+      "fecha": "2026-04-03",
+      "ctl": 137,
+      "atl": 142,
+      "tsb": -5
+    },
+    {
+      "fecha": "2026-04-04",
+      "ctl": 157,
+      "atl": 401,
+      "tsb": -244
+    },
+    {
+      "fecha": "2026-04-05",
+      "ctl": 153,
+      "atl": 353,
+      "tsb": -200
+    },
+    {
+      "fecha": "2026-04-06",
+      "ctl": 153,
+      "atl": 321,
+      "tsb": -168
+    },
+    {
+      "fecha": "2026-04-07",
+      "ctl": 152,
+      "atl": 283,
+      "tsb": -131
+    },
+    {
+      "fecha": "2026-04-08",
+      "ctl": 242,
+      "atl": 745,
+      "tsb": -503
+    },
+    {
+      "fecha": "2026-04-09",
+      "ctl": 250,
+      "atl": 669,
+      "tsb": -419
+    },
+    {
+      "fecha": "2026-04-10",
+      "ctl": 300,
+      "atl": 818,
+      "tsb": -518
+    },
+    {
+      "fecha": "2026-04-11",
+      "ctl": 304,
+      "atl": 707,
+      "tsb": -403
+    },
+    {
+      "fecha": "2026-04-12",
+      "ctl": 308,
+      "atl": 597,
+      "tsb": -289
+    },
+    {
+      "fecha": "2026-04-13",
+      "ctl": 313,
+      "atl": 495,
+      "tsb": -182
+    },
+    {
+      "fecha": "2026-04-14",
+      "ctl": 319,
+      "atl": 395,
+      "tsb": -76
+    },
+    {
+      "fecha": "2026-04-15",
+      "ctl": 331,
+      "atl": 379,
+      "tsb": -48
+    },
+    {
+      "fecha": "2026-04-16",
+      "ctl": 334,
+      "atl": 305,
+      "tsb": 29
+    },
+    {
+      "fecha": "2026-04-17",
+      "ctl": 417,
+      "atl": 674,
+      "tsb": -257
+    },
+    {
+      "fecha": "2026-04-18",
+      "ctl": 421,
+      "atl": 538,
+      "tsb": -117
+    },
+    {
+      "fecha": "2026-04-19",
+      "ctl": 416,
+      "atl": 454,
+      "tsb": -38
+    },
+    {
+      "fecha": "2026-04-20",
+      "ctl": 411,
+      "atl": 378,
+      "tsb": 33
+    },
+    {
+      "fecha": "2026-04-21",
+      "ctl": 403,
+      "atl": 335,
+      "tsb": 68
+    },
+    {
+      "fecha": "2026-04-22",
+      "ctl": 402,
+      "atl": 328,
+      "tsb": 74
+    },
+    {
+      "fecha": "2026-04-23",
+      "ctl": 395,
+      "atl": 276,
+      "tsb": 119
+    },
+    {
+      "fecha": "2026-04-24",
+      "ctl": 385,
+      "atl": 212,
+      "tsb": 173
+    },
+    {
+      "fecha": "2026-04-25",
+      "ctl": 375,
+      "atl": 150,
+      "tsb": 225
+    },
+    {
+      "fecha": "2026-04-26",
+      "ctl": 445,
+      "atl": 541,
+      "tsb": -96
+    },
+    {
+      "fecha": "2026-04-27",
+      "ctl": 437,
+      "atl": 442,
+      "tsb": -5
+    },
+    {
+      "fecha": "2026-04-28",
+      "ctl": 421,
+      "atl": 389,
+      "tsb": 32
+    },
+    {
+      "fecha": "2026-04-29",
+      "ctl": 406,
+      "atl": 336,
+      "tsb": 70
+    },
+    {
+      "fecha": "2026-04-30",
+      "ctl": 391,
+      "atl": 283,
+      "tsb": 108
+    },
+    {
+      "fecha": "2026-05-01",
+      "ctl": 376,
+      "atl": 231,
+      "tsb": 145
+    },
+    {
+      "fecha": "2026-05-02",
+      "ctl": 360,
+      "atl": 180,
+      "tsb": 180
+    },
+    {
+      "fecha": "2026-05-03",
+      "ctl": 344,
+      "atl": 134,
+      "tsb": 210
+    },
+    {
+      "fecha": "2026-05-04",
+      "ctl": 327,
+      "atl": 89,
+      "tsb": 238
+    },
+    {
+      "fecha": "2026-05-05",
+      "ctl": 311,
+      "atl": 45,
+      "tsb": 266
+    },
+    {
+      "fecha": "2026-05-06",
+      "ctl": 298,
+      "atl": 9,
+      "tsb": 289
+    },
+    {
+      "fecha": "2026-05-07",
+      "ctl": 278,
+      "atl": 26,
+      "tsb": 252
+    },
+    {
+      "fecha": "2026-05-08",
+      "ctl": 256,
+      "atl": 23,
+      "tsb": 233
+    },
+    {
+      "fecha": "2026-05-09",
+      "ctl": 268,
+      "atl": 210,
+      "tsb": 58
+    },
+    {
+      "fecha": "2026-05-10",
+      "ctl": 250,
+      "atl": 188,
+      "tsb": 62
+    },
+    {
+      "fecha": "2026-05-11",
+      "ctl": 232,
+      "atl": 167,
+      "tsb": 65
+    },
+    {
+      "fecha": "2026-05-12",
+      "ctl": 218,
+      "atl": 169,
+      "tsb": 49
+    },
+    {
+      "fecha": "2026-05-13",
+      "ctl": 201,
+      "atl": 145,
+      "tsb": 56
+    },
+    {
+      "fecha": "2026-05-14",
+      "ctl": 191,
+      "atl": 138,
+      "tsb": 53
+    },
+    {
+      "fecha": "2026-05-15",
+      "ctl": 180,
+      "atl": 112,
+      "tsb": 68
+    },
+    {
+      "fecha": "2026-05-16",
+      "ctl": 170,
+      "atl": 87,
+      "tsb": 83
+    },
+    {
+      "fecha": "2026-05-17",
+      "ctl": 161,
+      "atl": 62,
+      "tsb": 99
+    },
+    {
+      "fecha": "2026-05-18",
+      "ctl": 151,
+      "atl": 39,
+      "tsb": 112
+    },
+    {
+      "fecha": "2026-05-19",
+      "ctl": 143,
+      "atl": 22,
+      "tsb": 121
+    },
+    {
+      "fecha": "2026-05-20",
+      "ctl": 140,
+      "atl": 73,
+      "tsb": 67
+    },
+    {
+      "fecha": "2026-05-21",
+      "ctl": 137,
+      "atl": 62,
+      "tsb": 75
+    },
+    {
+      "fecha": "2026-05-22",
+      "ctl": 137,
+      "atl": 52,
+      "tsb": 85
+    },
+    {
+      "fecha": "2026-05-23",
+      "ctl": 137,
+      "atl": 50,
+      "tsb": 87
+    },
+    {
+      "fecha": "2026-05-24",
+      "ctl": 137,
+      "atl": 41,
+      "tsb": 96
+    },
+    {
+      "fecha": "2026-05-25",
+      "ctl": 137,
+      "atl": 71,
+      "tsb": 66
+    },
+    {
+      "fecha": "2026-05-26",
+      "ctl": 137,
+      "atl": 69,
+      "tsb": 68
+    },
+    {
+      "fecha": "2026-05-27",
+      "ctl": 137,
+      "atl": 67,
+      "tsb": 70
+    },
+    {
+      "fecha": "2026-05-28",
+      "ctl": 137,
+      "atl": 62,
+      "tsb": 75
+    },
+    {
+      "fecha": "2026-05-29",
+      "ctl": 137,
+      "atl": 50,
+      "tsb": 87
+    },
+    {
+      "fecha": "2026-05-30",
+      "ctl": 137,
+      "atl": 37,
+      "tsb": 100
+    },
+    {
+      "fecha": "2026-05-31",
+      "ctl": 137,
+      "atl": 31,
+      "tsb": 106
+    },
+    {
+      "fecha": "2026-06-01",
+      "ctl": 137,
+      "atl": 24,
+      "tsb": 113
+    },
+    {
+      "fecha": "2026-06-02",
+      "ctl": 137,
+      "atl": 32,
+      "tsb": 105
+    },
+    {
+      "fecha": "2026-06-03",
+      "ctl": 137,
+      "atl": 88,
+      "tsb": 49
+    },
+    {
+      "fecha": "2026-06-04",
+      "ctl": 137,
+      "atl": 74,
+      "tsb": 63
+    },
+    {
+      "fecha": "2026-06-05",
+      "ctl": 137,
+      "atl": 64,
+      "tsb": 73
+    },
+    {
+      "fecha": "2026-06-06",
+      "ctl": 137,
+      "atl": 55,
+      "tsb": 82
+    },
+    {
+      "fecha": "2026-06-07",
+      "ctl": 137,
+      "atl": 46,
+      "tsb": 91
+    },
+    {
+      "fecha": "2026-06-08",
+      "ctl": 137,
+      "atl": 67,
+      "tsb": 70
+    },
+    {
+      "fecha": "2026-06-09",
+      "ctl": 137,
+      "atl": 71,
+      "tsb": 66
+    },
+    {
+      "fecha": "2026-06-10",
+      "ctl": 137,
+      "atl": 65,
+      "tsb": 72
+    },
+    {
+      "fecha": "2026-06-11",
+      "ctl": 137,
+      "atl": 52,
+      "tsb": 85
+    },
+    {
+      "fecha": "2026-06-12",
+      "ctl": 137,
+      "atl": 39,
+      "tsb": 98
+    },
+    {
+      "fecha": "2026-06-13",
+      "ctl": 137,
+      "atl": 28,
+      "tsb": 109
+    },
+    {
+      "fecha": "2026-06-14",
+      "ctl": 137,
+      "atl": 23,
+      "tsb": 114
+    },
+    {
+      "fecha": "2026-06-15",
+      "ctl": 137,
+      "atl": 18,
+      "tsb": 119
+    },
+    {
+      "fecha": "2026-06-16",
+      "ctl": 137,
+      "atl": 13,
+      "tsb": 124
+    },
+    {
+      "fecha": "2026-06-17",
+      "ctl": 137,
+      "atl": 8,
+      "tsb": 129
+    },
+    {
+      "fecha": "2026-06-18",
+      "ctl": 137,
+      "atl": 3,
+      "tsb": 134
+    },
+    {
+      "fecha": "2026-06-19",
+      "ctl": 137,
+      "atl": 1,
+      "tsb": 136
+    },
+    {
+      "fecha": "2026-06-20",
+      "ctl": 137,
+      "atl": 0,
+      "tsb": 137
+    },
+    {
+      "fecha": "2026-07-13",
+      "ctl": 100,
+      "atl": 0,
+      "tsb": 100
+    },
+    {
+      "fecha": "2026-07-28",
+      "ctl": 137,
+      "atl": 0,
+      "tsb": 137
+    },
+    {
+      "fecha": "2026-07-29",
+      "ctl": 137,
+      "atl": 113,
+      "tsb": 24
+    },
+    {
+      "fecha": "2026-07-30",
+      "ctl": 137,
+      "atl": 102,
+      "tsb": 35
+    },
+    {
+      "fecha": "2026-07-31",
+      "ctl": 137,
+      "atl": 91,
+      "tsb": 46
+    },
+    {
+      "fecha": "2026-08-01",
+      "ctl": 137,
+      "atl": 79,
+      "tsb": 58
+    },
+    {
+      "fecha": "2026-08-02",
+      "ctl": 137,
+      "atl": 68,
+      "tsb": 69
+    },
+    {
+      "fecha": "2026-08-03",
+      "ctl": 137,
+      "atl": 80,
+      "tsb": 57
+    },
+    {
+      "fecha": "2026-08-04",
+      "ctl": 137,
+      "atl": 156,
+      "tsb": -19
+    },
+    {
+      "fecha": "2026-08-05",
+      "ctl": 137,
+      "atl": 133,
+      "tsb": 4
+    },
+    {
+      "fecha": "2026-08-06",
+      "ctl": 137,
+      "atl": 111,
+      "tsb": 26
+    },
+    {
+      "fecha": "2026-08-07",
+      "ctl": 137,
+      "atl": 88,
+      "tsb": 49
+    },
+    {
+      "fecha": "2026-08-08",
+      "ctl": 137,
+      "atl": 65,
+      "tsb": 72
+    },
+    {
+      "fecha": "2026-08-09",
+      "ctl": 137,
+      "atl": 54,
+      "tsb": 83
+    },
+    {
+      "fecha": "2026-08-10",
+      "ctl": 137,
+      "atl": 57,
+      "tsb": 80
+    },
+    {
+      "fecha": "2026-08-11",
+      "ctl": 137,
+      "atl": 85,
+      "tsb": 52
+    },
+    {
+      "fecha": "2026-08-12",
+      "ctl": 137,
+      "atl": 68,
+      "tsb": 69
+    },
+    {
+      "fecha": "2026-08-13",
+      "ctl": 137,
+      "atl": 100,
+      "tsb": 37
+    },
+    {
+      "fecha": "2026-08-14",
+      "ctl": 137,
+      "atl": 89,
+      "tsb": 48
+    },
+    {
+      "fecha": "2026-08-15",
+      "ctl": 137,
+      "atl": 78,
+      "tsb": 59
+    },
+    {
+      "fecha": "2026-08-16",
+      "ctl": 137,
+      "atl": 66,
+      "tsb": 71
+    },
+    {
+      "fecha": "2026-08-17",
+      "ctl": 137,
+      "atl": 68,
+      "tsb": 69
+    },
+    {
+      "fecha": "2026-08-18",
+      "ctl": 137,
+      "atl": 79,
+      "tsb": 58
+    },
+    {
+      "fecha": "2026-08-19",
+      "ctl": 137,
+      "atl": 112,
+      "tsb": 25
+    },
+    {
+      "fecha": "2026-08-20",
+      "ctl": 137,
+      "atl": 134,
+      "tsb": 3
+    },
+    {
+      "fecha": "2026-08-21",
+      "ctl": 137,
+      "atl": 118,
+      "tsb": 19
+    },
+    {
+      "fecha": "2026-08-22",
+      "ctl": 137,
+      "atl": 276,
+      "tsb": -139
+    },
+    {
+      "fecha": "2026-08-23",
+      "ctl": 137,
+      "atl": 240,
+      "tsb": -103
+    },
+    {
+      "fecha": "2026-08-24",
+      "ctl": 137,
+      "atl": 259,
+      "tsb": -122
+    },
+    {
+      "fecha": "2026-08-25",
+      "ctl": 152,
+      "atl": 367,
+      "tsb": -215
+    },
+    {
+      "fecha": "2026-08-26",
+      "ctl": 152,
+      "atl": 317,
+      "tsb": -165
+    },
+    {
+      "fecha": "2026-08-27",
+      "ctl": 154,
+      "atl": 272,
+      "tsb": -118
+    },
+    {
+      "fecha": "2026-08-28",
+      "ctl": 157,
+      "atl": 241,
+      "tsb": -84
+    },
+    {
+      "fecha": "2026-08-29",
+      "ctl": 157,
+      "atl": 192,
+      "tsb": -35
+    },
+    {
+      "fecha": "2026-08-30",
+      "ctl": 156,
+      "atl": 147,
+      "tsb": 9
+    },
+    {
+      "fecha": "2026-08-31",
+      "ctl": 158,
+      "atl": 125,
+      "tsb": 33
+    },
+    {
+      "fecha": "2026-09-01",
+      "ctl": 158,
+      "atl": 95,
+      "tsb": 63
+    },
+    {
+      "fecha": "2026-09-02",
+      "ctl": 158,
+      "atl": 94,
+      "tsb": 64
+    },
+    {
+      "fecha": "2026-09-03",
+      "ctl": 164,
+      "atl": 117,
+      "tsb": 47
+    },
+    {
+      "fecha": "2026-09-04",
+      "ctl": 162,
+      "atl": 101,
+      "tsb": 61
+    },
+    {
+      "fecha": "2026-09-05",
+      "ctl": 155,
+      "atl": 87,
+      "tsb": 68
+    },
+    {
+      "fecha": "2026-09-06",
+      "ctl": 149,
+      "atl": 73,
+      "tsb": 76
+    },
+    {
+      "fecha": "2026-09-07",
+      "ctl": 144,
+      "atl": 69,
+      "tsb": 75
+    },
+    {
+      "fecha": "2026-09-08",
+      "ctl": 141,
+      "atl": 74,
+      "tsb": 67
+    },
+    {
+      "fecha": "2026-09-09",
+      "ctl": 137,
+      "atl": 60,
+      "tsb": 77
+    }
+  ],
+  "vo2max": [
+    {
+      "fecha": "2025-12-09",
+      "valor": 49.0
+    },
+    {
+      "fecha": "2025-12-10",
+      "valor": 48.0
+    },
+    {
+      "fecha": "2025-12-26",
+      "valor": 46.0
+    },
+    {
+      "fecha": "2026-01-28",
+      "valor": 48.0
+    },
+    {
+      "fecha": "2026-02-02",
+      "valor": 49.0
+    },
+    {
+      "fecha": "2026-02-06",
+      "valor": 48.0
+    },
+    {
+      "fecha": "2026-02-17",
+      "valor": 46.0
+    },
+    {
+      "fecha": "2026-02-18",
+      "valor": 47.0
+    },
+    {
+      "fecha": "2026-02-20",
+      "valor": 45.0
+    },
+    {
+      "fecha": "2026-03-06",
+      "valor": 44.0
+    },
+    {
+      "fecha": "2026-03-09",
+      "valor": 43.8
+    },
+    {
+      "fecha": "2026-03-31",
+      "valor": 38.8
+    },
+    {
+      "fecha": "2026-04-04",
+      "valor": 40.3
+    },
+    {
+      "fecha": "2026-04-08",
+      "valor": 42.2
+    },
+    {
+      "fecha": "2026-04-10",
+      "valor": 40.0
+    },
+    {
+      "fecha": "2026-04-15",
+      "valor": 40.8
+    },
+    {
+      "fecha": "2026-04-17",
+      "valor": 41.2
+    },
+    {
+      "fecha": "2026-04-26",
+      "valor": 41.0
+    },
+    {
+      "fecha": "2026-05-09",
+      "valor": 41.9
+    },
+    {
+      "fecha": "2026-06-06",
+      "valor": 41.9
+    }
+  ],
+  "hrv": [
+    {
+      "fecha": "2026-08-20",
+      "valor": 55,
+      "promedioSemanal": 56
+    },
+    {
+      "fecha": "2026-08-21",
+      "valor": 57,
+      "promedioSemanal": 57
+    },
+    {
+      "fecha": "2026-08-22",
+      "valor": 20,
+      "promedioSemanal": 48
+    },
+    {
+      "fecha": "2026-08-23",
+      "valor": 55,
+      "promedioSemanal": 49
+    },
+    {
+      "fecha": "2026-08-24",
+      "valor": 67,
+      "promedioSemanal": 51
+    },
+    {
+      "fecha": "2026-08-25",
+      "valor": 66,
+      "promedioSemanal": 51
+    },
+    {
+      "fecha": "2026-08-26",
+      "valor": 59,
+      "promedioSemanal": 51
+    },
+    {
+      "fecha": "2026-08-27",
+      "valor": null,
+      "promedioSemanal": 51
+    },
+    {
+      "fecha": "2026-08-28",
+      "valor": 63,
+      "promedioSemanal": 51
+    },
+    {
+      "fecha": "2026-08-29",
+      "valor": 63,
+      "promedioSemanal": 62
+    },
+    {
+      "fecha": "2026-08-30",
+      "valor": 65,
+      "promedioSemanal": 64
+    },
+    {
+      "fecha": "2026-08-31",
+      "valor": null,
+      "promedioSemanal": 63
+    },
+    {
+      "fecha": "2026-09-01",
+      "valor": 61,
+      "promedioSemanal": 62
+    },
+    {
+      "fecha": "2026-09-02",
+      "valor": 64,
+      "promedioSemanal": 63
+    },
+    {
+      "fecha": "2026-09-03",
+      "valor": 61,
+      "promedioSemanal": 63
+    },
+    {
+      "fecha": "2026-09-04",
+      "valor": 58,
+      "promedioSemanal": 62
+    },
+    {
+      "fecha": "2026-09-05",
+      "valor": null,
+      "promedioSemanal": 62
+    },
+    {
+      "fecha": "2026-09-06",
+      "valor": null,
+      "promedioSemanal": 61
+    },
+    {
+      "fecha": "2026-09-07",
+      "valor": null,
+      "promedioSemanal": 61
+    },
+    {
+      "fecha": "2026-09-08",
+      "valor": 69,
+      "promedioSemanal": 63
+    },
+    {
+      "fecha": "2026-09-09",
+      "valor": 60,
+      "promedioSemanal": 62
+    }
+  ],
+  "rhr": [
+    {
+      "fecha": "2026-08-31",
+      "valor": 60
+    },
+    {
+      "fecha": "2026-09-01",
+      "valor": 59
+    },
+    {
+      "fecha": "2026-09-02",
+      "valor": 55
+    },
+    {
+      "fecha": "2026-09-03",
+      "valor": 58
+    },
+    {
+      "fecha": "2026-09-04",
+      "valor": 60
+    },
+    {
+      "fecha": "2026-09-05",
+      "valor": null
+    },
+    {
+      "fecha": "2026-09-06",
+      "valor": null
+    },
+    {
+      "fecha": "2026-09-07",
+      "valor": 62
+    },
+    {
+      "fecha": "2026-09-08",
+      "valor": 53
+    },
+    {
+      "fecha": "2026-09-09",
+      "valor": 60
+    }
+  ],
+  "sueno": [
+    {
+      "fecha": "2026-08-20",
+      "horas": 8.67,
+      "puntaje": 84
+    },
+    {
+      "fecha": "2026-08-21",
+      "horas": 5.07,
+      "puntaje": 64
+    },
+    {
+      "fecha": "2026-08-22",
+      "horas": 5.65,
+      "puntaje": 36
+    },
+    {
+      "fecha": "2026-08-23",
+      "horas": 9.12,
+      "puntaje": 78
+    },
+    {
+      "fecha": "2026-08-24",
+      "horas": 6.33,
+      "puntaje": 78
+    },
+    {
+      "fecha": "2026-08-25",
+      "horas": 6.1,
+      "puntaje": 75
+    },
+    {
+      "fecha": "2026-08-26",
+      "horas": 7.1,
+      "puntaje": 81
+    },
+    {
+      "fecha": "2026-08-28",
+      "horas": 6.86,
+      "puntaje": 81
+    },
+    {
+      "fecha": "2026-08-29",
+      "horas": 4.21,
+      "puntaje": 54
+    },
+    {
+      "fecha": "2026-08-30",
+      "horas": 11.52,
+      "puntaje": 83
+    },
+    {
+      "fecha": "2026-09-01",
+      "horas": 7.65,
+      "puntaje": 84
+    },
+    {
+      "fecha": "2026-09-02",
+      "horas": 7.17,
+      "puntaje": 86
+    },
+    {
+      "fecha": "2026-09-03",
+      "horas": 6.88,
+      "puntaje": 76
+    },
+    {
+      "fecha": "2026-09-04",
+      "horas": 6.82,
+      "puntaje": 70
+    },
+    {
+      "fecha": "2026-09-08",
+      "horas": 7.63,
+      "puntaje": 86
+    },
+    {
+      "fecha": "2026-09-09",
+      "horas": 6.21,
+      "puntaje": 62
+    }
+  ],
+  "actividades": [
+    {
+      "id": "act-1",
+      "fecha": "2025-10-24",
+      "nombre": "Celaya Running",
+      "tipo": "Rodaje",
+      "distanciaKm": 5.05,
+      "duracionSeg": 1971,
+      "avgHr": 176,
+      "maxHr": 192,
+      "ritmoMinKm": 6.51,
+      "pctMaxHr": 85.9,
+      "esfuerzo": "Calidad"
+    },
+    {
+      "id": "act-2",
+      "fecha": "2025-10-26",
+      "nombre": "Celaya Running",
+      "tipo": "Rodaje",
+      "distanciaKm": 3.46,
+      "duracionSeg": 1552,
+      "avgHr": 161,
+      "maxHr": 185,
+      "ritmoMinKm": 7.47,
+      "pctMaxHr": 78.5,
+      "esfuerzo": "Moderado"
+    },
+    {
+      "id": "act-3",
+      "fecha": "2025-11-05",
+      "nombre": "El Marques - Intervalos 1",
+      "tipo": "Intervalos",
+      "distanciaKm": 4.92,
+      "duracionSeg": 2390,
+      "avgHr": 162,
+      "maxHr": 193,
+      "ritmoMinKm": 8.1,
+      "pctMaxHr": 79.0,
+      "esfuerzo": "Moderado"
+    },
+    {
+      "id": "act-4",
+      "fecha": "2025-11-13",
+      "nombre": "Corsa su tapis roulant",
+      "tipo": "Rodaje (banda)",
+      "distanciaKm": 10.12,
+      "duracionSeg": 4628,
+      "avgHr": 167,
+      "maxHr": 190,
+      "ritmoMinKm": 7.62,
+      "pctMaxHr": 81.5,
+      "esfuerzo": "Calidad"
+    },
+    {
+      "id": "act-5",
+      "fecha": "2025-12-09",
+      "nombre": "Celaya Carrera",
+      "tipo": "Rodaje",
+      "distanciaKm": 2.8,
+      "duracionSeg": 1443,
+      "avgHr": 158,
+      "maxHr": 176,
+      "ritmoMinKm": 8.58,
+      "pctMaxHr": 77.1,
+      "esfuerzo": "Moderado"
+    },
+    {
+      "id": "act-6",
+      "fecha": "2025-12-10",
+      "nombre": "Celaya Carrera",
+      "tipo": "Rodaje",
+      "distanciaKm": 3.17,
+      "duracionSeg": 1729,
+      "avgHr": 145,
+      "maxHr": 170,
+      "ritmoMinKm": 9.09,
+      "pctMaxHr": 70.7,
+      "esfuerzo": "Moderado"
+    },
+    {
+      "id": "act-7",
+      "fecha": "2025-12-26",
+      "nombre": "Celaya Carrera",
+      "tipo": "Rodaje",
+      "distanciaKm": 5.0,
+      "duracionSeg": 1971,
+      "avgHr": 192,
+      "maxHr": 205,
+      "ritmoMinKm": 6.57,
+      "pctMaxHr": 93.7,
+      "esfuerzo": "Calidad"
+    },
+    {
+      "id": "act-8",
+      "fecha": "2026-01-13",
+      "nombre": "El Marques Entrenamiento en pista",
+      "tipo": "Pista",
+      "distanciaKm": 5.0,
+      "duracionSeg": 2410,
+      "avgHr": 146,
+      "maxHr": 189,
+      "ritmoMinKm": 8.03,
+      "pctMaxHr": 71.2,
+      "esfuerzo": "Moderado"
+    },
+    {
+      "id": "act-9",
+      "fecha": "2026-01-14",
+      "nombre": "El Marques - Intervalos 1",
+      "tipo": "Intervalos",
+      "distanciaKm": 5.06,
+      "duracionSeg": 2423,
+      "avgHr": 177,
+      "maxHr": 204,
+      "ritmoMinKm": 7.98,
+      "pctMaxHr": 86.3,
+      "esfuerzo": "Calidad"
+    },
+    {
+      "id": "act-10",
+      "fecha": "2026-01-28",
+      "nombre": "El Marques - Intervalos 5x800",
+      "tipo": "Intervalos",
+      "distanciaKm": 6.17,
+      "duracionSeg": 2858,
+      "avgHr": 162,
+      "maxHr": 191,
+      "ritmoMinKm": 7.72,
+      "pctMaxHr": 79.0,
+      "esfuerzo": "Moderado"
+    },
+    {
+      "id": "act-11",
+      "fecha": "2026-01-30",
+      "nombre": "El Marques Carrera",
+      "tipo": "Rodaje",
+      "distanciaKm": 10.08,
+      "duracionSeg": 4569,
+      "avgHr": 170,
+      "maxHr": 198,
+      "ritmoMinKm": 7.55,
+      "pctMaxHr": 82.9,
+      "esfuerzo": "Calidad"
+    },
+    {
+      "id": "act-12",
+      "fecha": "2026-02-02",
+      "nombre": "Celaya Carrera",
+      "tipo": "Rodaje",
+      "distanciaKm": 5.14,
+      "duracionSeg": 1983,
+      "avgHr": 163,
+      "maxHr": 189,
+      "ritmoMinKm": 6.43,
+      "pctMaxHr": 79.5,
+      "esfuerzo": "Moderado"
+    },
+    {
+      "id": "act-13",
+      "fecha": "2026-02-06",
+      "nombre": "El Marques Entrenamiento en pista",
+      "tipo": "Pista",
+      "distanciaKm": 11.21,
+      "duracionSeg": 5161,
+      "avgHr": 168,
+      "maxHr": 191,
+      "ritmoMinKm": 7.67,
+      "pctMaxHr": 82.0,
+      "esfuerzo": "Calidad"
+    },
+    {
+      "id": "act-14",
+      "fecha": "2026-02-08",
+      "nombre": "Cuauhtemoc Carrera",
+      "tipo": "Rodaje",
+      "distanciaKm": 6.84,
+      "duracionSeg": 3086,
+      "avgHr": 159,
+      "maxHr": 190,
+      "ritmoMinKm": 7.52,
+      "pctMaxHr": 77.6,
+      "esfuerzo": "Moderado"
+    },
+    {
+      "id": "act-15",
+      "fecha": "2026-02-17",
+      "nombre": "El Marques Entrenamiento en pista",
+      "tipo": "Pista",
+      "distanciaKm": 6.43,
+      "duracionSeg": 3604,
+      "avgHr": 156,
+      "maxHr": 181,
+      "ritmoMinKm": 9.34,
+      "pctMaxHr": 76.1,
+      "esfuerzo": "Moderado"
+    },
+    {
+      "id": "act-16",
+      "fecha": "2026-02-18",
+      "nombre": "El Marques - Intervalos 6x400",
+      "tipo": "Intervalos",
+      "distanciaKm": 4.61,
+      "duracionSeg": 2194,
+      "avgHr": 171,
+      "maxHr": 196,
+      "ritmoMinKm": 7.93,
+      "pctMaxHr": 83.4,
+      "esfuerzo": "Calidad"
+    },
+    {
+      "id": "act-17",
+      "fecha": "2026-02-20",
+      "nombre": "El Marques Carrera",
+      "tipo": "Rodaje",
+      "distanciaKm": 7.76,
+      "duracionSeg": 4123,
+      "avgHr": 166,
+      "maxHr": 194,
+      "ritmoMinKm": 8.85,
+      "pctMaxHr": 81.0,
+      "esfuerzo": "Calidad"
+    },
+    {
+      "id": "act-18",
+      "fecha": "2026-03-06",
+      "nombre": "Celaya Carrera",
+      "tipo": "Rodaje",
+      "distanciaKm": 6.1,
+      "duracionSeg": 2800,
+      "avgHr": 175,
+      "maxHr": 190,
+      "ritmoMinKm": 7.64,
+      "pctMaxHr": 85.4,
+      "esfuerzo": "Calidad"
+    },
+    {
+      "id": "act-19",
+      "fecha": "2026-03-31",
+      "nombre": "Celaya Carrera",
+      "tipo": "Rodaje",
+      "distanciaKm": 11.0,
+      "duracionSeg": 4866,
+      "avgHr": 173,
+      "maxHr": 192,
+      "ritmoMinKm": 7.37,
+      "pctMaxHr": 84.4,
+      "esfuerzo": "Calidad"
+    },
+    {
+      "id": "act-20",
+      "fecha": "2026-04-04",
+      "nombre": "Arandas Carrera",
+      "tipo": "Rodaje",
+      "distanciaKm": 9.89,
+      "duracionSeg": 4342,
+      "avgHr": 175,
+      "maxHr": 195,
+      "ritmoMinKm": 7.32,
+      "pctMaxHr": 85.4,
+      "esfuerzo": "Calidad"
+    },
+    {
+      "id": "act-21",
+      "fecha": "2026-04-08",
+      "nombre": "El Marques - Intervalos 5x800",
+      "tipo": "Intervalos",
+      "distanciaKm": 6.09,
+      "duracionSeg": 2844,
+      "avgHr": 176,
+      "maxHr": 199,
+      "ritmoMinKm": 7.78,
+      "pctMaxHr": 85.9,
+      "esfuerzo": "Calidad"
+    },
+    {
+      "id": "act-22",
+      "fecha": "2026-04-10",
+      "nombre": "El Marques Entrenamiento en pista",
+      "tipo": "Pista",
+      "distanciaKm": 16.04,
+      "duracionSeg": 7551,
+      "avgHr": 179,
+      "maxHr": 189,
+      "ritmoMinKm": 7.85,
+      "pctMaxHr": 87.3,
+      "esfuerzo": "Calidad"
+    },
+    {
+      "id": "act-23",
+      "fecha": "2026-04-15",
+      "nombre": "El Marques Entrenamiento en pista",
+      "tipo": "Pista",
+      "distanciaKm": 5.0,
+      "duracionSeg": 2810,
+      "avgHr": 155,
+      "maxHr": 176,
+      "ritmoMinKm": 9.37,
+      "pctMaxHr": 75.6,
+      "esfuerzo": "Moderado"
+    },
+    {
+      "id": "act-24",
+      "fecha": "2026-04-17",
+      "nombre": "El Marques Entrenamiento en pista",
+      "tipo": "Pista",
+      "distanciaKm": 21.2,
+      "duracionSeg": 10019,
+      "avgHr": 180,
+      "maxHr": 202,
+      "ritmoMinKm": 7.88,
+      "pctMaxHr": 87.8,
+      "esfuerzo": "Calidad"
+    },
+    {
+      "id": "act-25",
+      "fecha": "2026-04-26",
+      "nombre": "Leon Carrera",
+      "tipo": "Rodaje",
+      "distanciaKm": 21.36,
+      "duracionSeg": 9049,
+      "avgHr": 181,
+      "maxHr": 204,
+      "ritmoMinKm": 7.06,
+      "pctMaxHr": 88.3,
+      "esfuerzo": "Calidad"
+    },
+    {
+      "id": "act-26",
+      "fecha": "2026-05-09",
+      "nombre": "Celaya Carrera",
+      "tipo": "Rodaje",
+      "distanciaKm": 2.1,
+      "duracionSeg": 806,
+      "avgHr": 158,
+      "maxHr": 197,
+      "ritmoMinKm": 6.38,
+      "pctMaxHr": 77.1,
+      "esfuerzo": "Moderado"
+    },
+    {
+      "id": "act-27",
+      "fecha": "2026-05-09",
+      "nombre": "Celaya Carrera (tramo final)",
+      "tipo": "Rodaje",
+      "distanciaKm": 1.02,
+      "duracionSeg": 302,
+      "avgHr": 187,
+      "maxHr": 202,
+      "ritmoMinKm": 4.96,
+      "pctMaxHr": 91.2,
+      "esfuerzo": "Calidad"
+    }
+  ]
+}

@@ -348,6 +348,18 @@ input,select,button{font-family:inherit;font-size:14px;}
 }
 .hab-del-btn:hover{background:var(--expense-bg);color:var(--expense);}
 
+/* ===== Ejercicio ===== */
+.ejer-mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+@media (max-width:820px){.ejer-mini-grid{grid-template-columns:1fr;}}
+.ejer-mini-card h3{margin-bottom:6px;}
+.ejer-mini-card svg{width:100%;height:auto;}
+.ejer-mini-note{font-size:12px;color:var(--text-faint);margin-top:6px;}
+.effort-badge{display:inline-flex;align-items:center;padding:3px 9px;border-radius:999px;font-weight:600;font-size:12px;white-space:nowrap;}
+.effort-badge.suave{background:var(--income-bg);color:var(--income);}
+.effort-badge.moderado{background:var(--primary-soft);color:var(--primary);}
+.effort-badge.calidad{background:var(--expense-bg);color:var(--expense);}
+.ejer-hint{background:var(--surface-2);border-radius:var(--radius-sm);padding:12px 14px;font-size:13px;color:var(--text-muted);margin-top:14px;}
+
 /* ===== Table ===== */
 .table-header{display:flex;justify-content:space-between;align-items:center;}
 .table-wrap{overflow-x:auto;margin-top:10px;}
@@ -533,10 +545,114 @@ td.nota{white-space:normal;color:var(--text-muted);max-width:220px;}
 </div>
 
 <div id="view-ejercicio" class="app-main module-view hidden">
-  <div class="card module-empty">
+
+  <div class="card module-empty" id="ejer-empty">
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
     <h2>Ejercicio</h2>
-    <p>Este módulo todavía no tiene datos. Lo construiremos más adelante.</p>
+    <p>Importa tus datos de Garmin (obtenidos por chat) para ver tu panel de entrenamiento.</p>
+    <div class="hab-empty-actions" style="border-top:none;padding-top:0;">
+      <input type="file" id="input-import-garmin-empty" accept="application/json" class="hidden">
+      <button class="btn" id="btn-import-garmin-empty">Importar datos de Garmin</button>
+    </div>
+  </div>
+
+  <div id="ejer-content" class="hidden" style="display:flex;flex-direction:column;gap:20px;">
+
+    <section class="kpis" id="ejer-kpis">
+      <div class="kpi"><div class="label">CTL · Fitness</div><div class="value" id="ejer-kpi-ctl">-</div></div>
+      <div class="kpi"><div class="label">ATL · Fatiga</div><div class="value" id="ejer-kpi-atl">-</div></div>
+      <div class="kpi"><div class="label">TSB · Forma</div><div class="value" id="ejer-kpi-tsb">-</div></div>
+      <div class="kpi"><div class="label">VO2 máx.</div><div class="value" id="ejer-kpi-vo2">-</div></div>
+      <div class="kpi"><div class="label">FC en reposo</div><div class="value" id="ejer-kpi-rhr">-</div></div>
+    </section>
+
+    <section class="card">
+      <h2>Carga de entrenamiento</h2>
+      <h3 id="ejer-carga-range">Últimos 9 meses</h3>
+      <svg id="ejer-carga-chart" viewBox="0 0 640 240"></svg>
+      <div class="trend-legend">
+        <span><i class="dot" style="background:var(--primary)"></i>CTL (fitness)</span>
+        <span><i class="dot" style="background:var(--expense)"></i>ATL (fatiga)</span>
+        <span><i class="dot" style="background:var(--income)"></i>TSB (forma)</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Kilometraje semanal <span style="font-weight:400;font-size:14px;color:var(--text-muted);">últimas 12 semanas</span></h2>
+      <svg id="ejer-km-chart" viewBox="0 0 640 200"></svg>
+      <p class="empty-note" id="ejer-km-empty" hidden>Sin carreras registradas en las últimas 12 semanas. Este panel se llenará en cuanto vuelvas a correr.</p>
+    </section>
+
+    <section class="card">
+      <h2>VO2 máx. y recuperación</h2>
+      <div class="ejer-mini-grid">
+        <div class="ejer-mini-card">
+          <h3>VO2 máx.</h3>
+          <svg id="ejer-vo2-chart" viewBox="0 0 300 160"></svg>
+          <p class="ejer-mini-note" id="ejer-vo2-note"></p>
+        </div>
+        <div class="ejer-mini-card">
+          <h3>HRV (variabilidad de FC)</h3>
+          <svg id="ejer-hrv-chart" viewBox="0 0 300 160"></svg>
+          <p class="ejer-mini-note">Promedio nocturno y promedio semanal, últimos 21 días.</p>
+        </div>
+        <div class="ejer-mini-card">
+          <h3>FC en reposo</h3>
+          <svg id="ejer-rhr-chart" viewBox="0 0 300 160"></svg>
+          <p class="ejer-mini-note">Últimos 10 días.</p>
+        </div>
+        <div class="ejer-mini-card">
+          <h3>Sueño</h3>
+          <svg id="ejer-sueno-chart" viewBox="0 0 300 160"></svg>
+          <p class="ejer-mini-note" id="ejer-sueno-note"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Carreras recientes</h2>
+      <p class="ejer-mini-note" id="ejer-carreras-note"></p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Fecha</th><th>Nombre</th><th>Distancia</th><th>Ritmo</th><th>FC media</th><th>Tipo</th></tr>
+          </thead>
+          <tbody id="ejer-tabla-carreras"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Panel de ritmos</h2>
+      <h3>¿Tus días "suaves" son realmente suaves?</h3>
+      <p class="ejer-mini-note">Esfuerzo estimado como % de tu frecuencia cardíaca máxima observada (<span id="ejer-max-hr-ref"></span> lpm). Suave &lt;65%, Moderado 65–80%, Calidad &gt;80%.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Fecha</th><th>Nombre</th><th>Ritmo</th><th>FC media</th><th>% FC máx.</th><th>Esfuerzo</th></tr>
+          </thead>
+          <tbody id="ejer-tabla-ritmos"></tbody>
+        </table>
+      </div>
+      <div class="ejer-hint" id="ejer-hint"></div>
+    </section>
+
+    <section class="card">
+      <div class="data-actions">
+        <div class="row">
+          <div><strong>Importar datos de Garmin</strong><p>Reemplaza los datos actuales con un archivo JSON exportado desde el chat.</p></div>
+          <div>
+            <input type="file" id="input-import-garmin" accept="application/json" class="hidden">
+            <button class="btn secondary" id="btn-import-garmin">Importar JSON</button>
+          </div>
+        </div>
+        <div class="row">
+          <div><strong>Exportar datos de Garmin</strong><p>Descarga los datos actuales de entrenamiento en un archivo JSON.</p></div>
+          <button class="btn secondary" id="btn-export-garmin">Exportar JSON</button>
+        </div>
+      </div>
+    </section>
+
   </div>
 </div>
 
@@ -781,7 +897,7 @@ td.nota{white-space:normal;color:var(--text-muted);max-width:220px;}
 "use strict";
 
 /* ===== Storage ===== */
-const DB_KEYS = { movs:"finanzas_movimientos", cats:"finanzas_categorias", cfg:"finanzas_config", pend:"pendientes_items", hab:"habitos_items", cal:"calendario_items" };
+const DB_KEYS = { movs:"finanzas_movimientos", cats:"finanzas_categorias", cfg:"finanzas_config", pend:"pendientes_items", hab:"habitos_items", cal:"calendario_items", garmin:"garmin_data" };
 const Storage = {
   getMovimientos(){ try{ return JSON.parse(localStorage.getItem(DB_KEYS.movs)) || []; }catch(e){ return []; } },
   setMovimientos(arr){ localStorage.setItem(DB_KEYS.movs, JSON.stringify(arr)); },
@@ -795,6 +911,8 @@ const Storage = {
   setHabitos(arr){ localStorage.setItem(DB_KEYS.hab, JSON.stringify(arr)); },
   getCalendario(){ try{ return JSON.parse(localStorage.getItem(DB_KEYS.cal)) || []; }catch(e){ return []; } },
   setCalendario(arr){ localStorage.setItem(DB_KEYS.cal, JSON.stringify(arr)); },
+  getGarminData(){ try{ return JSON.parse(localStorage.getItem(DB_KEYS.garmin)) || null; }catch(e){ return null; } },
+  setGarminData(obj){ localStorage.setItem(DB_KEYS.garmin, JSON.stringify(obj)); },
   isFirstRun(){ return localStorage.getItem(DB_KEYS.cats) === null; }
 };
 
@@ -1051,6 +1169,8 @@ const HABITOS_MES_INICIAL = "2026-09";
 function mesActualISO(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"); }
 const habState = { mes: mesActualISO() < HABITOS_MES_INICIAL ? HABITOS_MES_INICIAL : mesActualISO() };
 
+let garminData = null;
+
 let calendario = [];
 const CALENDARIO_MES_INICIAL = "2026-09";
 const CALENDARIO_MES_FINAL = "2031-12";
@@ -1083,14 +1203,17 @@ function init(){
   pendientes = Storage.getPendientes();
   habitos = Storage.getHabitos();
   calendario = Storage.getCalendario();
+  garminData = Storage.getGarminData();
   bindEvents();
   bindPendientesEvents();
   bindHabitosEvents();
   bindCalendarioEvents();
+  bindEjercicioEvents();
   render();
   renderPendientes();
   renderHabitos();
   iniciarCalendario();
+  renderEjercicio();
 }
 
 function migrateCategorias(){
@@ -2230,6 +2353,336 @@ function bindCalendarioEvents(){
       toast("Evento eliminado");
     });
   });
+}
+
+/* ===== Ejercicio ===== */
+function formatRitmo(v){
+  if(v==null) return "-";
+  const min=Math.floor(v); const seg=Math.round((v-min)*60);
+  return `${min}:${String(seg).padStart(2,"0")} /km`;
+}
+
+function trendLineSVG(points,color){
+  if(points.length<2) return "";
+  const n=points.length;
+  const meanX=points.reduce((s,p)=>s+p[0],0)/n, meanY=points.reduce((s,p)=>s+p[1],0)/n;
+  let num=0,den=0;
+  points.forEach(p=>{ num+=(p[0]-meanX)*(p[1]-meanY); den+=(p[0]-meanX)*(p[0]-meanX); });
+  const slope = den===0?0:num/den;
+  const intercept = meanY-slope*meanX;
+  const x1=points[0][0], x2=points[n-1][0];
+  const y1=slope*x1+intercept, y2=slope*x2+intercept;
+  return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${color}" stroke-width="2" stroke-dasharray="5,4" stroke-linecap="round"></line>`;
+}
+
+function renderCargaChart(carga){
+  const svg=document.getElementById("ejer-carga-chart");
+  if(!carga || !carga.length){ svg.innerHTML=""; return; }
+  const W=640,H=240,padTop=14,padBottom=26,padLeft=36,padRight=10;
+  const chartW=W-padLeft-padRight, chartH=H-padTop-padBottom;
+  const allVals=[];
+  carga.forEach(d=>{ allVals.push(d.ctl,d.atl,d.tsb); });
+  let minV=Math.min(...allVals,0), maxV=Math.max(...allVals);
+  const padV=(maxV-minV)*0.06 || 10;
+  minV-=padV; maxV+=padV;
+  const n=carga.length;
+  const xAt=(i)=> padLeft + (n<=1?0:(i/(n-1))*chartW);
+  const yAt=(v)=> padTop + chartH - ((v-minV)/(maxV-minV))*chartH;
+
+  function lineFor(key){
+    let d="";
+    carga.forEach((row,i)=>{ d += (i===0?"M ":"L ") + xAt(i).toFixed(1)+","+yAt(row[key]).toFixed(1)+" "; });
+    return d;
+  }
+
+  const zeroY=yAt(0);
+  let svgContent = `<line x1="${padLeft}" y1="${zeroY.toFixed(1)}" x2="${W-padRight}" y2="${zeroY.toFixed(1)}" stroke="var(--border)" stroke-width="1"></line>`;
+  svgContent += `<path d="${lineFor('atl')}" fill="none" stroke="var(--expense)" stroke-width="1.4" stroke-linejoin="round"></path>`;
+  svgContent += `<path d="${lineFor('tsb')}" fill="none" stroke="var(--income)" stroke-width="1.4" stroke-linejoin="round"></path>`;
+  svgContent += `<path d="${lineFor('ctl')}" fill="none" stroke="var(--primary)" stroke-width="2.4" stroke-linejoin="round"></path>`;
+
+  let lastMonth="";
+  carga.forEach((row,i)=>{
+    const m=row.fecha.slice(0,7);
+    if(m!==lastMonth){
+      const x=xAt(i);
+      const label=capitalize(parseDate(row.fecha).toLocaleDateString("es-ES",{month:"short"})).replace(".","");
+      svgContent += `<text x="${x.toFixed(1)}" y="${H-8}" text-anchor="middle" font-size="11" fill="var(--text-muted)">${label}</text>`;
+      lastMonth=m;
+    }
+  });
+
+  svg.innerHTML=svgContent;
+}
+
+function computeWeeklyKm(actividades){
+  const weeks=[];
+  const thisWeekStart=startOfWeek(new Date());
+  for(let i=11;i>=0;i--){
+    const start=addDays(thisWeekStart,-7*i);
+    weeks.push({start, end:addDays(start,6), km:0});
+  }
+  (actividades||[]).forEach(a=>{
+    const d=parseDate(a.fecha);
+    for(const w of weeks){ if(d>=w.start && d<=w.end){ w.km += a.distanciaKm; break; } }
+  });
+  return weeks;
+}
+
+function renderKmChart(actividades){
+  const weeks=computeWeeklyKm(actividades);
+  const svg=document.getElementById("ejer-km-chart");
+  const total=weeks.reduce((s,w)=>s+w.km,0);
+  document.getElementById("ejer-km-empty").hidden = total>0;
+  const W=640,H=200,padTop=14,padBottom=28,padLeft=30,padRight=10;
+  const chartW=W-padLeft-padRight, chartH=H-padTop-padBottom;
+  const maxKm=Math.max(1,...weeks.map(w=>w.km));
+  const groupW=chartW/weeks.length;
+  let svgContent="";
+  const points=[];
+  weeks.forEach((w,i)=>{
+    const x=padLeft+i*groupW;
+    const barW=Math.min(28,groupW*0.5);
+    const h=(w.km/maxKm)*chartH;
+    svgContent+=`<rect x="${(x+groupW/2-barW/2).toFixed(1)}" y="${(padTop+chartH-h).toFixed(1)}" width="${barW.toFixed(1)}" height="${Math.max(h,0).toFixed(1)}" rx="3" fill="var(--primary)"></rect>`;
+    svgContent+=`<text x="${(x+groupW/2).toFixed(1)}" y="${H-10}" text-anchor="middle" font-size="10" fill="var(--text-muted)">${w.start.getDate()}/${w.start.getMonth()+1}</text>`;
+    points.push([x+groupW/2, padTop+chartH-h]);
+  });
+  if(total>0) svgContent += trendLineSVG(points, "var(--income)");
+  svgContent += `<line x1="${padLeft}" y1="${(padTop+chartH).toFixed(1)}" x2="${W-padRight}" y2="${(padTop+chartH).toFixed(1)}" stroke="var(--border)" stroke-width="1"></line>`;
+  svg.innerHTML=svgContent;
+}
+
+function renderMiniLineChart(svgId, series, opts){
+  opts=opts||{};
+  const svg=document.getElementById(svgId);
+  const W=300,H=160,padTop=12,padBottom=22,padLeft=30,padRight=10;
+  const chartW=W-padLeft-padRight, chartH=H-padTop-padBottom;
+  const vals=series.map(p=>p.y).filter(v=>v!=null);
+  if(!vals.length){ svg.innerHTML=`<text x="${W/2}" y="${H/2}" text-anchor="middle" font-size="12" fill="var(--text-faint)">Sin datos</text>`; return; }
+  let minV=Math.min(...vals), maxV=Math.max(...vals);
+  if(minV===maxV){ minV-=1; maxV+=1; }
+  const pad=(maxV-minV)*0.15;
+  minV-=pad; maxV+=pad;
+  const n=series.length;
+  const xAt=(i)=> padLeft+(n<=1?0:(i/(n-1))*chartW);
+  const yAt=(v)=> padTop+chartH-((v-minV)/(maxV-minV))*chartH;
+
+  let d=""; let started=false; const dots=[];
+  series.forEach((p,i)=>{
+    if(p.y==null){ started=false; return; }
+    const x=xAt(i), y=yAt(p.y);
+    d+=(started?"L ":"M ")+x.toFixed(1)+","+y.toFixed(1)+" ";
+    started=true;
+    dots.push([x,y]);
+  });
+  let svgContent=`<path d="${d}" fill="none" stroke="${opts.color||'var(--primary)'}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>`;
+  dots.forEach(([x,y])=>{ svgContent+=`<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.4" fill="${opts.color||'var(--primary)'}"></circle>`; });
+
+  if(opts.secondary){
+    let d2=""; let started2=false;
+    series.forEach((p,i)=>{
+      const v=p[opts.secondary];
+      if(v==null){ started2=false; return; }
+      const x=xAt(i), y=yAt(v);
+      d2+=(started2?"L ":"M ")+x.toFixed(1)+","+y.toFixed(1)+" ";
+      started2=true;
+    });
+    svgContent += `<path d="${d2}" fill="none" stroke="${opts.secondaryColor||'var(--text-faint)'}" stroke-width="1.6" stroke-dasharray="4,3" stroke-linejoin="round"></path>`;
+  }
+
+  svgContent += `<text x="${padLeft}" y="${H-6}" font-size="10" fill="var(--text-faint)">${series[0].label}</text>`;
+  svgContent += `<text x="${W-padRight}" y="${H-6}" text-anchor="end" font-size="10" fill="var(--text-faint)">${series[n-1].label}</text>`;
+  svg.innerHTML=svgContent;
+}
+
+function renderVo2Chart(vo2max){
+  const series=(vo2max||[]).map(p=>({label:p.fecha.slice(5), y:p.valor}));
+  renderMiniLineChart("ejer-vo2-chart", series, {color:"var(--primary)"});
+  const note=document.getElementById("ejer-vo2-note");
+  if(vo2max && vo2max.length){
+    const last=vo2max[vo2max.length-1];
+    const diasDesde=Math.round((new Date()-parseDate(last.fecha))/86400000);
+    note.textContent = diasDesde>30
+      ? `Último dato: ${last.fecha} (${last.valor}). Garmin solo recalcula el VO2 máx. tras una carrera; sin novedades desde la pausa.`
+      : `Último dato: ${last.fecha} (${last.valor}).`;
+  } else note.textContent="";
+}
+
+function renderHrvChart(hrv){
+  const series=(hrv||[]).map(p=>({label:p.fecha.slice(5), y:p.valor, semanal:p.promedioSemanal}));
+  renderMiniLineChart("ejer-hrv-chart", series, {color:"var(--income)", secondary:"semanal", secondaryColor:"var(--text-faint)"});
+}
+
+function renderRhrChart(rhr){
+  const series=(rhr||[]).map(p=>({label:p.fecha.slice(5), y:p.valor}));
+  renderMiniLineChart("ejer-rhr-chart", series, {color:"var(--expense)"});
+}
+
+function renderSuenoChart(sueno){
+  const svg=document.getElementById("ejer-sueno-chart");
+  const noteEl=document.getElementById("ejer-sueno-note");
+  if(!sueno || !sueno.length){ svg.innerHTML=`<text x="150" y="80" text-anchor="middle" font-size="12" fill="var(--text-faint)">Sin datos</text>`; noteEl.textContent=""; return; }
+  const W=300,H=160,padTop=12,padBottom=22,padLeft=26,padRight=8;
+  const chartW=W-padLeft-padRight, chartH=H-padTop-padBottom;
+  const maxH=Math.max(9,...sueno.map(s=>s.horas));
+  const n=sueno.length;
+  const groupW=chartW/n;
+  let svgContent="";
+  sueno.forEach((s,i)=>{
+    const x=padLeft+i*groupW;
+    const barW=Math.min(14,groupW*0.6);
+    const h=(s.horas/maxH)*chartH;
+    const color = s.puntaje>=80?"var(--income)": s.puntaje>=60?"var(--primary)":"var(--expense)";
+    svgContent+=`<rect x="${(x+groupW/2-barW/2).toFixed(1)}" y="${(padTop+chartH-h).toFixed(1)}" width="${barW.toFixed(1)}" height="${h.toFixed(1)}" rx="2" fill="${color}"></rect>`;
+  });
+  svgContent += `<line x1="${padLeft}" y1="${(padTop+chartH).toFixed(1)}" x2="${W-padRight}" y2="${(padTop+chartH).toFixed(1)}" stroke="var(--border)" stroke-width="1"></line>`;
+  svgContent += `<text x="${padLeft}" y="${H-6}" font-size="10" fill="var(--text-faint)">${sueno[0].fecha.slice(5)}</text>`;
+  svgContent += `<text x="${W-padRight}" y="${H-6}" text-anchor="end" font-size="10" fill="var(--text-faint)">${sueno[n-1].fecha.slice(5)}</text>`;
+  svg.innerHTML=svgContent;
+  const avgH=(sueno.reduce((s,x)=>s+x.horas,0)/n).toFixed(1);
+  const avgScore=Math.round(sueno.reduce((s,x)=>s+x.puntaje,0)/n);
+  noteEl.textContent = `Promedio: ${avgH} h · puntaje ${avgScore}/100`;
+}
+
+function renderEjerKpis(data){
+  const carga=data.carga||[];
+  const last=carga[carga.length-1];
+  document.getElementById("ejer-kpi-ctl").textContent = last? Math.round(last.ctl) : "-";
+  document.getElementById("ejer-kpi-atl").textContent = last? Math.round(last.atl) : "-";
+  const tsbEl=document.getElementById("ejer-kpi-tsb");
+  tsbEl.textContent = last ? (last.tsb>0?"+":"")+Math.round(last.tsb) : "-";
+  tsbEl.className = "value " + (last && last.tsb<0 ? "negative":"positive");
+  const vo2=data.vo2max||[];
+  document.getElementById("ejer-kpi-vo2").textContent = vo2.length ? vo2[vo2.length-1].valor : "-";
+  const rhrVals=(data.rhr||[]).filter(r=>r.valor!=null);
+  document.getElementById("ejer-kpi-rhr").textContent = rhrVals.length ? rhrVals[rhrVals.length-1].valor+" lpm" : "-";
+}
+
+function renderTablaCarreras(actividades){
+  const tbody=document.getElementById("ejer-tabla-carreras");
+  const noteEl=document.getElementById("ejer-carreras-note");
+  const list=[...(actividades||[])].sort((a,b)=>b.fecha.localeCompare(a.fecha)).slice(0,10);
+  const hace4semanas=addDays(new Date(),-28);
+  const hayRecientes = list.some(a=>parseDate(a.fecha)>=hace4semanas);
+  noteEl.textContent = (list.length && !hayRecientes) ? "No hay carreras en las últimas 3–4 semanas. Mostrando las más recientes registradas, de antes de la pausa." : "";
+  if(!list.length){ tbody.innerHTML=`<tr><td colspan="6" class="empty-note">Sin carreras registradas.</td></tr>`; return; }
+  tbody.innerHTML=list.map(a=>{
+    const [y,m,d]=a.fecha.split("-");
+    return `<tr>
+      <td>${d}/${m}/${y}</td>
+      <td>${escapeHtml(a.nombre)}</td>
+      <td>${a.distanciaKm.toFixed(2)} km</td>
+      <td>${formatRitmo(a.ritmoMinKm)}</td>
+      <td>${a.avgHr} lpm</td>
+      <td>${escapeHtml(a.tipo)}</td>
+    </tr>`;
+  }).join("");
+}
+
+function renderTablaRitmos(actividades){
+  const tbody=document.getElementById("ejer-tabla-ritmos");
+  const list=[...(actividades||[])].sort((a,b)=>b.fecha.localeCompare(a.fecha)).slice(0,12);
+  if(!list.length){ tbody.innerHTML=`<tr><td colspan="6" class="empty-note">Sin carreras registradas.</td></tr>`; document.getElementById("ejer-hint").textContent=""; return; }
+  tbody.innerHTML=list.map(a=>{
+    const [y,m,d]=a.fecha.split("-");
+    const cls = a.esfuerzo==="Calidad"?"calidad": a.esfuerzo==="Moderado"?"moderado":"suave";
+    return `<tr>
+      <td>${d}/${m}/${y}</td>
+      <td>${escapeHtml(a.nombre)}</td>
+      <td>${formatRitmo(a.ritmoMinKm)}</td>
+      <td>${a.avgHr} lpm</td>
+      <td>${a.pctMaxHr}%</td>
+      <td><span class="effort-badge ${cls}">${a.esfuerzo}</span></td>
+    </tr>`;
+  }).join("");
+  const suaves=(actividades||[]).filter(a=>a.esfuerzo==="Suave").length;
+  const total=(actividades||[]).length;
+  document.getElementById("ejer-hint").textContent = !total ? "" : (suaves===0
+    ? `De ${total} carreras registradas, ninguna estuvo por debajo del 65% de tu FC máxima observada: prácticamente todos tus rodajes se corren a esfuerzo moderado o de calidad, no suave.`
+    : `${suaves} de ${total} carreras registradas fueron realmente suaves (menos del 65% de tu FC máx.).`);
+}
+
+function renderEjercicio(){
+  const empty=document.getElementById("ejer-empty");
+  const content=document.getElementById("ejer-content");
+  if(!garminData){
+    empty.classList.remove("hidden");
+    content.classList.add("hidden");
+    return;
+  }
+  empty.classList.add("hidden");
+  content.classList.remove("hidden");
+  document.getElementById("ejer-max-hr-ref").textContent = (garminData.meta && garminData.meta.maxHrReferencia) || "205";
+  renderEjerKpis(garminData);
+  renderCargaChart(garminData.carga||[]);
+  renderKmChart(garminData.actividades||[]);
+  renderVo2Chart(garminData.vo2max||[]);
+  renderHrvChart(garminData.hrv||[]);
+  renderRhrChart(garminData.rhr||[]);
+  renderSuenoChart(garminData.sueno||[]);
+  renderTablaCarreras(garminData.actividades||[]);
+  renderTablaRitmos(garminData.actividades||[]);
+}
+
+function validarGarminData(data){
+  return !!data && Array.isArray(data.carga) && Array.isArray(data.actividades);
+}
+
+function importarGarminArchivo(file){
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const data=JSON.parse(reader.result);
+      if(!validarGarminData(data)) throw new Error("Formato inválido");
+      showConfirm("Esto reemplazará los datos de Ejercicio actuales por los del archivo importado. ¿Continuar?", ()=>{
+        garminData=data;
+        Storage.setGarminData(garminData);
+        renderEjercicio();
+        toast("Datos de Garmin importados correctamente");
+      });
+    }catch(err){
+      toast("No se pudo importar el archivo: "+err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+async function exportarGarminJSON(){
+  if(!garminData){ toast("No hay datos de Garmin para exportar."); return; }
+  const json=JSON.stringify(garminData,null,2);
+  const filename=`garmin-datos-${toISODate(new Date())}.json`;
+
+  let downloads=null;
+  try{ downloads=await claude.use("downloads"); }catch(e){ downloads=null; }
+
+  if(downloads){
+    try{ await downloads.save({ filename, data:json }); toast("Datos exportados"); }
+    catch(err){ if(!err || err.code!=="declined") toast("No se pudo exportar."); }
+    return;
+  }
+
+  const blob=new Blob([json],{type:"application/json"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url; a.download=filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+  toast("Datos exportados");
+}
+
+function bindEjercicioEvents(){
+  function wireImport(btnId, inputId){
+    document.getElementById(btnId).addEventListener("click",()=>document.getElementById(inputId).click());
+    document.getElementById(inputId).addEventListener("change",(e)=>{
+      const file=e.target.files[0]; if(!file) return;
+      importarGarminArchivo(file);
+      e.target.value="";
+    });
+  }
+  wireImport("btn-import-garmin-empty","input-import-garmin-empty");
+  wireImport("btn-import-garmin","input-import-garmin");
+  document.getElementById("btn-export-garmin").addEventListener("click", exportarGarminJSON);
 }
 
 function updateThemeIcon(theme){
