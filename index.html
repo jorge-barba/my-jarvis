@@ -25,6 +25,10 @@
   --radius-sm:9px;
   --shadow:0 1px 2px rgba(16,24,40,.06),0 2px 8px rgba(16,24,40,.06);
   --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --accent-cyan:#0891b2;
+  --accent-cyan-bg:#cffafe;
+  --accent-amber:#d97706;
+  --accent-amber-bg:#fef3c7;
 }
 :root[data-theme="dark"]{
   --bg:#101217;
@@ -42,6 +46,10 @@
   --expense:#f87171;
   --expense-bg:rgba(248,113,113,.14);
   --shadow:0 1px 2px rgba(0,0,0,.5),0 4px 14px rgba(0,0,0,.35);
+  --accent-cyan:#22d3ee;
+  --accent-cyan-bg:rgba(34,211,238,.14);
+  --accent-amber:#fbbf24;
+  --accent-amber-bg:rgba(251,191,36,.14);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]):not([data-theme="dark"]){
@@ -51,6 +59,8 @@
     --income:#34d399;--income-bg:rgba(52,211,153,.14);
     --expense:#f87171;--expense-bg:rgba(248,113,113,.14);
     --shadow:0 1px 2px rgba(0,0,0,.5),0 4px 14px rgba(0,0,0,.35);
+    --accent-cyan:#22d3ee;--accent-cyan-bg:rgba(34,211,238,.14);
+    --accent-amber:#fbbf24;--accent-amber-bg:rgba(251,191,36,.14);
   }
 }
 
@@ -349,6 +359,37 @@ input,select,button{font-family:inherit;font-size:14px;}
 .hab-del-btn:hover{background:var(--expense-bg);color:var(--expense);}
 
 /* ===== Ejercicio ===== */
+.ejer-stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+@media (max-width:900px){.ejer-stats-grid{grid-template-columns:repeat(3,1fr);}}
+@media (max-width:560px){.ejer-stats-grid{grid-template-columns:repeat(2,1fr);}}
+.stat-card{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);}
+.stat-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex:none;}
+.stat-icon svg{width:21px;height:21px;}
+.stat-icon.c-primary{background:var(--primary-soft);color:var(--primary);}
+.stat-icon.c-income{background:var(--income-bg);color:var(--income);}
+.stat-icon.c-expense{background:var(--expense-bg);color:var(--expense);}
+.stat-icon.c-cyan{background:var(--accent-cyan-bg);color:var(--accent-cyan);}
+.stat-icon.c-amber{background:var(--accent-amber-bg);color:var(--accent-amber);}
+.stat-body{display:flex;flex-direction:column;gap:1px;min-width:0;}
+.stat-body .label{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.03em;}
+.stat-body .value{font-size:19px;font-weight:700;color:var(--text);line-height:1.3;}
+.stat-body .delta{font-size:11px;font-weight:600;color:var(--text-faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.stat-body .delta.up{color:var(--income);}
+.stat-body .delta.down{color:var(--expense);}
+
+.ejer-carga-grid{display:grid;grid-template-columns:2fr 1fr;gap:20px;align-items:start;}
+@media (max-width:960px){.ejer-carga-grid{grid-template-columns:1fr;}}
+.ejer-chart-wrap{position:relative;}
+.ejer-tooltip{position:absolute;top:4px;background:var(--text);color:var(--bg);font-size:12px;padding:6px 10px;border-radius:8px;pointer-events:none;white-space:nowrap;box-shadow:var(--shadow);z-index:5;line-height:1.6;}
+.ejer-analysis-card h3{margin-bottom:2px;}
+.ejer-glossary{display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.ejer-glossary-item{display:flex;gap:10px;align-items:flex-start;}
+.ejer-glossary-item .dot{width:10px;height:10px;border-radius:50%;flex:none;margin-top:5px;}
+.ejer-glossary-item strong{font-size:13px;}
+.ejer-glossary-item p{margin:2px 0 0;font-size:12.5px;color:var(--text-muted);line-height:1.4;}
+.ejer-analysis-text{font-size:13.5px;color:var(--text);line-height:1.6;background:var(--surface-2);border-radius:var(--radius-sm);padding:12px 14px;margin-top:8px;}
+.ejer-analysis-text strong{color:var(--primary);}
+
 .ejer-mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
 @media (max-width:820px){.ejer-mini-grid{grid-template-columns:1fr;}}
 .ejer-mini-card h3{margin-bottom:6px;}
@@ -558,24 +599,55 @@ td.nota{white-space:normal;color:var(--text-muted);max-width:220px;}
 
   <div id="ejer-content" class="hidden" style="display:flex;flex-direction:column;gap:20px;">
 
-    <section class="kpis" id="ejer-kpis">
-      <div class="kpi"><div class="label">CTL · Fitness</div><div class="value" id="ejer-kpi-ctl">-</div></div>
-      <div class="kpi"><div class="label">ATL · Fatiga</div><div class="value" id="ejer-kpi-atl">-</div></div>
-      <div class="kpi"><div class="label">TSB · Forma</div><div class="value" id="ejer-kpi-tsb">-</div></div>
-      <div class="kpi"><div class="label">VO2 máx.</div><div class="value" id="ejer-kpi-vo2">-</div></div>
-      <div class="kpi"><div class="label">FC en reposo</div><div class="value" id="ejer-kpi-rhr">-</div></div>
-    </section>
-
-    <section class="card">
-      <h2>Carga de entrenamiento</h2>
-      <h3 id="ejer-carga-range">Últimos 9 meses</h3>
-      <svg id="ejer-carga-chart" viewBox="0 0 640 240"></svg>
-      <div class="trend-legend">
-        <span><i class="dot" style="background:var(--primary)"></i>CTL (fitness)</span>
-        <span><i class="dot" style="background:var(--expense)"></i>ATL (fatiga)</span>
-        <span><i class="dot" style="background:var(--income)"></i>TSB (forma)</span>
+    <section class="ejer-stats-grid" id="ejer-kpis">
+      <div class="stat-card">
+        <div class="stat-icon c-primary"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <div class="stat-body"><span class="label">CTL · Fitness</span><span class="value" id="ejer-kpi-ctl">-</span><span class="delta" id="ejer-kpi-ctl-delta"></span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon c-expense"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></div>
+        <div class="stat-body"><span class="label">ATL · Fatiga</span><span class="value" id="ejer-kpi-atl">-</span><span class="delta" id="ejer-kpi-atl-delta"></span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon c-income" id="ejer-kpi-tsb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="18" height="12" rx="2"/><line x1="23" y1="10" x2="23" y2="14"/></svg></div>
+        <div class="stat-body"><span class="label">TSB · Forma</span><span class="value" id="ejer-kpi-tsb">-</span><span class="delta" id="ejer-kpi-tsb-delta"></span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon c-cyan"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.59 4.59A2 2 0 1 1 11 8H2m10.59 11.41A2 2 0 1 0 14 16H2m15.73-8.27A2.5 2.5 0 1 1 19.5 12H2"/></svg></div>
+        <div class="stat-body"><span class="label">VO2 máx.</span><span class="value" id="ejer-kpi-vo2">-</span><span class="delta" id="ejer-kpi-vo2-delta"></span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon c-amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <div class="stat-body"><span class="label">FC en reposo</span><span class="value" id="ejer-kpi-rhr">-</span><span class="delta" id="ejer-kpi-rhr-delta"></span></div>
       </div>
     </section>
+
+    <div class="ejer-carga-grid">
+      <section class="card">
+        <h2>Carga de entrenamiento</h2>
+        <h3 id="ejer-carga-range">Últimos 9 meses</h3>
+        <div class="ejer-chart-wrap">
+          <svg id="ejer-carga-chart" viewBox="0 0 640 240"></svg>
+          <div class="ejer-tooltip" id="ejer-carga-tooltip" hidden></div>
+        </div>
+        <div class="trend-legend">
+          <span><i class="dot" style="background:var(--primary)"></i>CTL (fitness)</span>
+          <span><i class="dot" style="background:var(--expense)"></i>ATL (fatiga)</span>
+          <span><i class="dot" style="background:var(--income)"></i>TSB (forma)</span>
+        </div>
+      </section>
+
+      <section class="card ejer-analysis-card">
+        <h2>¿Qué significan?</h2>
+        <div class="ejer-glossary">
+          <div class="ejer-glossary-item"><span class="dot" style="background:var(--primary)"></span><div><strong>CTL — Fitness</strong><p>Carga crónica: tu condición acumulada en ~6 semanas. Sube con entrenamiento constante y baja lento si paras.</p></div></div>
+          <div class="ejer-glossary-item"><span class="dot" style="background:var(--expense)"></span><div><strong>ATL — Fatiga</strong><p>Carga aguda: tu fatiga de la última semana. Sube y baja rápido según lo que entrenaste hace poco.</p></div></div>
+          <div class="ejer-glossary-item"><span class="dot" style="background:var(--income)"></span><div><strong>TSB — Forma</strong><p>TSB = CTL − ATL. Positivo es estar fresco; negativo, cargar fatiga acumulada.</p></div></div>
+        </div>
+        <h3 style="margin-top:16px;">Análisis de tu gráfica</h3>
+        <p class="ejer-analysis-text" id="ejer-analisis-carga"></p>
+      </section>
+    </div>
 
     <section class="card">
       <h2>Kilometraje semanal <span style="font-weight:400;font-size:14px;color:var(--text-muted);">últimas 12 semanas</span></h2>
@@ -2375,9 +2447,11 @@ function trendLineSVG(points,color){
   return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${color}" stroke-width="2" stroke-dasharray="5,4" stroke-linecap="round"></line>`;
 }
 
+let cargaLayout=null;
+
 function renderCargaChart(carga){
   const svg=document.getElementById("ejer-carga-chart");
-  if(!carga || !carga.length){ svg.innerHTML=""; return; }
+  if(!carga || !carga.length){ svg.innerHTML=""; cargaLayout=null; return; }
   const W=640,H=240,padTop=14,padBottom=26,padLeft=36,padRight=10;
   const chartW=W-padLeft-padRight, chartH=H-padTop-padBottom;
   const allVals=[];
@@ -2388,6 +2462,7 @@ function renderCargaChart(carga){
   const n=carga.length;
   const xAt=(i)=> padLeft + (n<=1?0:(i/(n-1))*chartW);
   const yAt=(v)=> padTop + chartH - ((v-minV)/(maxV-minV))*chartH;
+  cargaLayout={carga,padLeft,chartW,padTop,chartH,minV,maxV,n,W,H};
 
   function lineFor(key){
     let d="";
@@ -2411,8 +2486,103 @@ function renderCargaChart(carga){
       lastMonth=m;
     }
   });
+  svgContent += `<g id="ejer-carga-hover"></g>`;
 
   svg.innerHTML=svgContent;
+}
+
+function onCargaChartMove(e){
+  if(!cargaLayout) return;
+  const svg=document.getElementById("ejer-carga-chart");
+  const rect=svg.getBoundingClientRect();
+  const {carga,padLeft,chartW,padTop,chartH,minV,maxV,n,W}=cargaLayout;
+  const mouseX=(e.clientX-rect.left)*(W/rect.width);
+  let idx=Math.round(((mouseX-padLeft)/chartW)*(n-1));
+  idx=Math.max(0, Math.min(n-1, idx));
+  const row=carga[idx];
+  const xAt=(i)=> padLeft + (n<=1?0:(i/(n-1))*chartW);
+  const yAt=(v)=> padTop + chartH - ((v-minV)/(maxV-minV))*chartH;
+  const x=xAt(idx);
+
+  const hoverGroup=document.getElementById("ejer-carga-hover");
+  if(hoverGroup){
+    hoverGroup.innerHTML = `
+      <line x1="${x.toFixed(1)}" y1="${padTop}" x2="${x.toFixed(1)}" y2="${(padTop+chartH).toFixed(1)}" stroke="var(--text-faint)" stroke-width="1" stroke-dasharray="3,3"></line>
+      <circle cx="${x.toFixed(1)}" cy="${yAt(row.ctl).toFixed(1)}" r="4" fill="var(--primary)" stroke="var(--surface)" stroke-width="1.5"></circle>
+      <circle cx="${x.toFixed(1)}" cy="${yAt(row.atl).toFixed(1)}" r="4" fill="var(--expense)" stroke="var(--surface)" stroke-width="1.5"></circle>
+      <circle cx="${x.toFixed(1)}" cy="${yAt(row.tsb).toFixed(1)}" r="4" fill="var(--income)" stroke="var(--surface)" stroke-width="1.5"></circle>
+    `;
+  }
+  const tooltip=document.getElementById("ejer-carga-tooltip");
+  if(tooltip){
+    tooltip.innerHTML = `<strong>${formatFechaCorta(row.fecha)}</strong><br>CTL ${Math.round(row.ctl)} · ATL ${Math.round(row.atl)} · TSB ${row.tsb>0?"+":""}${Math.round(row.tsb)}`;
+    const leftPx=Math.min(rect.width-140, Math.max(0, (e.clientX-rect.left)+12));
+    tooltip.style.left=leftPx+"px";
+    tooltip.hidden=false;
+  }
+}
+
+function onCargaChartLeave(){
+  const hoverGroup=document.getElementById("ejer-carga-hover");
+  if(hoverGroup) hoverGroup.innerHTML="";
+  const tooltip=document.getElementById("ejer-carga-tooltip");
+  if(tooltip) tooltip.hidden=true;
+}
+
+function diasEntre(f1,f2){ return Math.round((parseDate(f2)-parseDate(f1))/86400000); }
+
+function valorEnFecha(carga, fechaObjetivo){
+  let res=carga[0];
+  for(const row of carga){ if(row.fecha<=fechaObjetivo) res=row; else break; }
+  return res;
+}
+
+function formatFechaCorta(fecha){
+  const d=parseDate(fecha);
+  return `${d.getDate()} ${capitalize(d.toLocaleDateString("es-ES",{month:"short"})).replace(".","")}`;
+}
+
+function clasificarTsb(tsb){
+  if(tsb>=20) return {texto:"muy fresco", corto:"Muy fresco"};
+  if(tsb>=5) return {texto:"fresco, buen momento para una carrera o prueba de esfuerzo", corto:"Fresco"};
+  if(tsb>=-10) return {texto:"en zona neutra", corto:"Neutral"};
+  if(tsb>=-30) return {texto:"fatigado, entrenando con una carga productiva", corto:"Fatigado"};
+  return {texto:"en zona de alto riesgo de sobreentrenamiento", corto:"Alto riesgo"};
+}
+
+function generarAnalisisCarga(carga){
+  if(!carga || carga.length<2) return "";
+  const last=carga[carga.length-1];
+  const fechaHace30=toISODate(addDays(parseDate(last.fecha),-30));
+  const hace30=valorEnFecha(carga, fechaHace30);
+  const deltaCtl=Math.round(last.ctl-hace30.ctl);
+
+  const estado=clasificarTsb(last.tsb);
+
+  let tendenciaTexto;
+  if(deltaCtl>5) tendenciaTexto=`tu fitness (CTL) subió ${deltaCtl} puntos en el último mes: estás construyendo forma.`;
+  else if(deltaCtl<-5) tendenciaTexto=`tu fitness (CTL) bajó ${Math.abs(deltaCtl)} puntos en el último mes: estás perdiendo condición, probablemente por la pausa de entrenamiento.`;
+  else tendenciaTexto=`tu fitness se mantuvo prácticamente estable en el último mes (${deltaCtl>=0?"+":""}${deltaCtl}).`;
+
+  let pico=carga[0];
+  carga.forEach(r=>{ if(r.atl>pico.atl) pico=r; });
+
+  let mayorPausaDias=0, mayorPausaInicio=null, mayorPausaFin=null;
+  for(let i=1;i<carga.length;i++){
+    if(carga[i-1].atl===0){
+      const dias=diasEntre(carga[i-1].fecha, carga[i].fecha);
+      if(dias>mayorPausaDias){ mayorPausaDias=dias; mayorPausaInicio=carga[i-1].fecha; mayorPausaFin=carga[i].fecha; }
+    }
+  }
+
+  const partes=[];
+  partes.push(`Ahora mismo estás <strong>${estado.texto}</strong> (TSB ${last.tsb>0?"+":""}${Math.round(last.tsb)}).`);
+  partes.push(`En el último mes, ${tendenciaTexto}`);
+  partes.push(`El pico de carga de estos 9 meses fue el ${formatFechaCorta(pico.fecha)}, con una fatiga aguda (ATL) de ${Math.round(pico.atl)}.`);
+  if(mayorPausaDias>=14){
+    partes.push(`Tu pausa más larga sin actividad registrada fue de ${mayorPausaDias} días, entre el ${formatFechaCorta(mayorPausaInicio)} y el ${formatFechaCorta(mayorPausaFin)}, lo que explica buena parte de la caída de tu fitness.`);
+  }
+  return partes.join(" ");
 }
 
 function computeWeeklyKm(actividades){
@@ -2548,15 +2718,48 @@ function renderSuenoChart(sueno){
 function renderEjerKpis(data){
   const carga=data.carga||[];
   const last=carga[carga.length-1];
+
   document.getElementById("ejer-kpi-ctl").textContent = last? Math.round(last.ctl) : "-";
   document.getElementById("ejer-kpi-atl").textContent = last? Math.round(last.atl) : "-";
+  document.getElementById("ejer-kpi-atl-delta").textContent = "Fatiga de los últimos 7 días";
+
   const tsbEl=document.getElementById("ejer-kpi-tsb");
-  tsbEl.textContent = last ? (last.tsb>0?"+":"")+Math.round(last.tsb) : "-";
-  tsbEl.className = "value " + (last && last.tsb<0 ? "negative":"positive");
+  const tsbDeltaEl=document.getElementById("ejer-kpi-tsb-delta");
+  const tsbIconEl=document.getElementById("ejer-kpi-tsb-icon");
+  if(last){
+    tsbEl.textContent=(last.tsb>0?"+":"")+Math.round(last.tsb);
+    const estado=clasificarTsb(last.tsb);
+    tsbDeltaEl.textContent=estado.corto;
+    tsbDeltaEl.className="delta "+(last.tsb>=5?"up": last.tsb<-10?"down":"");
+    tsbIconEl.className="stat-icon "+(last.tsb<0?"c-expense":"c-income");
+  } else { tsbEl.textContent="-"; tsbDeltaEl.textContent=""; }
+
+  const ctlDeltaEl=document.getElementById("ejer-kpi-ctl-delta");
+  if(carga.length>1 && last){
+    const fechaHace30=toISODate(addDays(parseDate(last.fecha),-30));
+    const hace30=valorEnFecha(carga, fechaHace30);
+    const deltaCtl=Math.round(last.ctl-hace30.ctl);
+    ctlDeltaEl.textContent=(deltaCtl>=0?"+":"")+deltaCtl+" en 30 días";
+    ctlDeltaEl.className="delta "+(deltaCtl>5?"up": deltaCtl<-5?"down":"");
+  } else ctlDeltaEl.textContent="";
+
   const vo2=data.vo2max||[];
-  document.getElementById("ejer-kpi-vo2").textContent = vo2.length ? vo2[vo2.length-1].valor : "-";
+  const vo2DeltaEl=document.getElementById("ejer-kpi-vo2-delta");
+  if(vo2.length){
+    document.getElementById("ejer-kpi-vo2").textContent = vo2[vo2.length-1].valor;
+    vo2DeltaEl.textContent = "Últ. act.: "+vo2[vo2.length-1].fecha;
+  } else { document.getElementById("ejer-kpi-vo2").textContent="-"; vo2DeltaEl.textContent=""; }
+
   const rhrVals=(data.rhr||[]).filter(r=>r.valor!=null);
-  document.getElementById("ejer-kpi-rhr").textContent = rhrVals.length ? rhrVals[rhrVals.length-1].valor+" lpm" : "-";
+  const rhrDeltaEl=document.getElementById("ejer-kpi-rhr-delta");
+  if(rhrVals.length){
+    document.getElementById("ejer-kpi-rhr").textContent = rhrVals[rhrVals.length-1].valor+" lpm";
+    if(rhrVals.length>1){
+      const delta=rhrVals[rhrVals.length-1].valor-rhrVals[0].valor;
+      rhrDeltaEl.textContent=(delta>=0?"+":"")+delta+" vs. hace 10 días";
+      rhrDeltaEl.className="delta "+(delta<0?"up": delta>0?"down":"");
+    } else rhrDeltaEl.textContent="";
+  } else { document.getElementById("ejer-kpi-rhr").textContent="-"; rhrDeltaEl.textContent=""; }
 }
 
 function renderTablaCarreras(actividades){
@@ -2616,6 +2819,7 @@ function renderEjercicio(){
   document.getElementById("ejer-max-hr-ref").textContent = (garminData.meta && garminData.meta.maxHrReferencia) || "205";
   renderEjerKpis(garminData);
   renderCargaChart(garminData.carga||[]);
+  document.getElementById("ejer-analisis-carga").innerHTML = generarAnalisisCarga(garminData.carga||[]);
   renderKmChart(garminData.actividades||[]);
   renderVo2Chart(garminData.vo2max||[]);
   renderHrvChart(garminData.hrv||[]);
@@ -2672,6 +2876,10 @@ async function exportarGarminJSON(){
 }
 
 function bindEjercicioEvents(){
+  const cargaSvg=document.getElementById("ejer-carga-chart");
+  cargaSvg.addEventListener("mousemove", onCargaChartMove);
+  cargaSvg.addEventListener("mouseleave", onCargaChartLeave);
+
   function wireImport(btnId, inputId){
     document.getElementById(btnId).addEventListener("click",()=>document.getElementById(inputId).click());
     document.getElementById(inputId).addEventListener("change",(e)=>{
