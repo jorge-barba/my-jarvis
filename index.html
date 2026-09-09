@@ -295,6 +295,23 @@ input,select,button{font-family:inherit;font-size:14px;}
 .overdue-date{display:block;font-size:11px;font-weight:700;color:var(--expense);text-transform:capitalize;margin-bottom:1px;}
 .upcoming-date{display:block;font-size:11px;font-weight:700;color:var(--primary);text-transform:capitalize;margin-bottom:1px;}
 
+/* ===== Habitos ===== */
+.hab-empty-actions{padding-top:10px;border-top:1px solid var(--border);margin-top:4px;}
+#tabla-habitos{min-width:100%;}
+#tabla-habitos .hab-day-th,#tabla-habitos .hab-day-cell{padding:6px 3px;text-align:center;white-space:normal;}
+.hab-day-th .dnum{display:block;font-size:11px;font-weight:700;color:var(--text);}
+.hab-day-th .dabbr{display:block;font-size:9px;color:var(--text-faint);text-transform:lowercase;}
+.hab-day-cell input[type="checkbox"]{width:16px;height:16px;accent-color:var(--income);cursor:pointer;}
+.hab-num-cell{color:var(--text-faint);}
+.hab-nombre-cell{outline:none;min-width:130px;}
+.hab-cat-cell{outline:none;}
+.hab-cat-badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:600;white-space:nowrap;}
+.hab-completados-cell{color:var(--text-muted);font-variant-numeric:tabular-nums;}
+.hab-progreso-cell{display:flex;align-items:center;gap:8px;min-width:110px;}
+.hab-progreso-track{flex:1;height:8px;background:var(--surface-2);border-radius:999px;overflow:hidden;}
+.hab-progreso-fill{height:100%;background:var(--income);border-radius:999px;}
+.hab-progreso-pct{font-size:12px;color:var(--text-muted);white-space:nowrap;font-variant-numeric:tabular-nums;}
+
 /* ===== Table ===== */
 .table-header{display:flex;justify-content:space-between;align-items:center;}
 .table-wrap{overflow-x:auto;margin-top:10px;}
@@ -561,6 +578,42 @@ td.nota{white-space:normal;color:var(--text-muted);max-width:220px;}
   </div>
 </div>
 
+<div id="view-habitos" class="app-main module-view hidden">
+
+  <section class="card">
+    <div class="period-nav">
+      <button class="icon-btn" id="hab-mes-prev" title="Mes anterior">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span id="hab-mes-label"></span>
+      <button class="icon-btn" id="hab-mes-next" title="Mes siguiente">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+    <div class="hab-empty-actions" id="hab-empty-actions" hidden>
+      <p class="empty-note" style="padding:0 0 10px;">Este mes todavía no tiene hábitos.</p>
+      <button class="btn secondary" id="hab-copiar-mes-anterior">Copiar hábitos del mes anterior</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="table-wrap">
+      <table id="tabla-habitos">
+        <thead>
+          <tr id="habitos-head-row"></tr>
+        </thead>
+        <tbody id="habitos-body"></tbody>
+      </table>
+    </div>
+    <form id="form-add-habito" class="pend-add-form">
+      <input type="text" id="hab-nombre" placeholder="Nombre del hábito" required>
+      <input type="text" id="hab-categoria" placeholder="Categoría (opcional)">
+      <button type="submit" class="btn">Agregar hábito</button>
+    </form>
+  </section>
+
+</div>
+
 <nav class="bottom-nav">
   <button class="bn-item active" data-module="finanzas">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -581,6 +634,10 @@ td.nota{white-space:normal;color:var(--text-muted);max-width:220px;}
   <button class="bn-item" data-module="calendario">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
     <span>Calendario</span>
+  </button>
+  <button class="bn-item" data-module="habitos">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><circle cx="12" cy="12" r="10"/></svg>
+    <span>Hábitos</span>
   </button>
 </nav>
 
@@ -643,7 +700,7 @@ td.nota{white-space:normal;color:var(--text-muted);max-width:220px;}
 "use strict";
 
 /* ===== Storage ===== */
-const DB_KEYS = { movs:"finanzas_movimientos", cats:"finanzas_categorias", cfg:"finanzas_config", pend:"pendientes_items" };
+const DB_KEYS = { movs:"finanzas_movimientos", cats:"finanzas_categorias", cfg:"finanzas_config", pend:"pendientes_items", hab:"habitos_items" };
 const Storage = {
   getMovimientos(){ try{ return JSON.parse(localStorage.getItem(DB_KEYS.movs)) || []; }catch(e){ return []; } },
   setMovimientos(arr){ localStorage.setItem(DB_KEYS.movs, JSON.stringify(arr)); },
@@ -653,6 +710,8 @@ const Storage = {
   setConfig(obj){ localStorage.setItem(DB_KEYS.cfg, JSON.stringify(obj)); },
   getPendientes(){ try{ return JSON.parse(localStorage.getItem(DB_KEYS.pend)) || []; }catch(e){ return []; } },
   setPendientes(arr){ localStorage.setItem(DB_KEYS.pend, JSON.stringify(arr)); },
+  getHabitos(){ try{ return JSON.parse(localStorage.getItem(DB_KEYS.hab)) || []; }catch(e){ return []; } },
+  setHabitos(arr){ localStorage.setItem(DB_KEYS.hab, JSON.stringify(arr)); },
   isFirstRun(){ return localStorage.getItem(DB_KEYS.cats) === null; }
 };
 
@@ -904,6 +963,11 @@ let pendientes = [];
 const pendState = { fecha: toISODate(new Date()) };
 let pendWeekOffset = 0;
 
+let habitos = [];
+const HABITOS_MES_INICIAL = "2026-09";
+function mesActualISO(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"); }
+const habState = { mes: mesActualISO() < HABITOS_MES_INICIAL ? HABITOS_MES_INICIAL : mesActualISO() };
+
 function catById(id){ return categorias.find(c=>c.id===id); }
 
 /* ===== Init ===== */
@@ -928,10 +992,13 @@ function init(){
   document.getElementById("f-fecha").value = toISODate(new Date());
   populateCategoriaSelect("ingreso");
   pendientes = Storage.getPendientes();
+  habitos = Storage.getHabitos();
   bindEvents();
   bindPendientesEvents();
+  bindHabitosEvents();
   render();
   renderPendientes();
+  renderHabitos();
 }
 
 function migrateCategorias(){
@@ -1721,6 +1788,172 @@ async function exportarJSON(){
   document.body.appendChild(a); a.click(); a.remove();
   URL.revokeObjectURL(url);
   toast("Respaldo exportado");
+}
+
+/* ===== Habitos ===== */
+function daysInMonth(mesISO){
+  const [y,m]=mesISO.split("-").map(Number);
+  return new Date(y,m,0).getDate();
+}
+function addMonthsISO(mesISO, delta){
+  const [y,m]=mesISO.split("-").map(Number);
+  const d=new Date(y, m-1+delta, 1);
+  return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
+}
+function mesLabelHabitos(mesISO){
+  const [y,m]=mesISO.split("-").map(Number);
+  return capitalize(new Date(y,m-1,1).toLocaleDateString("es-ES",{month:"long",year:"numeric"}));
+}
+function categoriaColor(nombre){
+  if(!nombre) return null;
+  const paleta=["#3b82f6","#8b5cf6","#f59e0b","#14b8a6","#64748b","#ec4899","#22c55e","#eab308"];
+  let hash=0;
+  for(let i=0;i<nombre.length;i++) hash=(hash*31+nombre.charCodeAt(i))>>>0;
+  return paleta[hash % paleta.length];
+}
+function habitosDelMes(mes){ return habitos.filter(h=>h.mes===mes); }
+
+function renderHabitos(){
+  const mes=habState.mes;
+  document.getElementById("hab-mes-label").textContent = mesLabelHabitos(mes);
+  document.getElementById("hab-mes-prev").disabled = mes<=HABITOS_MES_INICIAL;
+  document.getElementById("hab-mes-next").disabled = mes>=addMonthsISO(mesActualISO(),1);
+
+  const totalDias=daysInMonth(mes);
+  const items=habitosDelMes(mes).sort((a,b)=>a.orden-b.orden);
+
+  const headRow=document.getElementById("habitos-head-row");
+  let headHtml=`<th>N°</th><th>Hábito</th><th>Categoría</th>`;
+  for(let d=1; d<=totalDias; d++){
+    const fecha=new Date(Number(mes.split("-")[0]), Number(mes.split("-")[1])-1, d);
+    const abbr=fecha.toLocaleDateString("es-ES",{weekday:"short"}).replace(".","").toLowerCase();
+    headHtml+=`<th class="hab-day-th"><span class="dnum">${String(d).padStart(2,"0")}</span><span class="dabbr">${abbr}</span></th>`;
+  }
+  headHtml+=`<th>Completados</th><th>Progreso %</th><th></th>`;
+  headRow.innerHTML=headHtml;
+
+  const body=document.getElementById("habitos-body");
+  const emptyActions=document.getElementById("hab-empty-actions");
+
+  if(items.length===0){
+    body.innerHTML=`<tr><td colspan="${6+totalDias}" class="empty-note">No hay hábitos configurados para este mes.</td></tr>`;
+    const hayAnterior=habitosDelMes(addMonthsISO(mes,-1)).length>0;
+    emptyActions.hidden=!hayAnterior;
+    return;
+  }
+  emptyActions.hidden=true;
+
+  body.innerHTML=items.map((h,idx)=>{
+    const dias=h.dias||[];
+    const completados=dias.filter(Boolean).length;
+    const pct=totalDias? (completados/totalDias*100):0;
+    let diasHtml="";
+    for(let d=0; d<totalDias; d++){
+      diasHtml+=`<td class="hab-day-cell"><input type="checkbox" data-id="${h.id}" data-dia="${d}" ${dias[d]?"checked":""}></td>`;
+    }
+    const color=categoriaColor(h.categoria);
+    const badgeStyle = color ? `background:${color}22;color:${color}` : `background:var(--surface-2);color:var(--text-faint)`;
+    return `<tr data-id="${h.id}">
+      <td class="hab-num-cell">${idx+1}</td>
+      <td><span class="hab-nombre-cell" contenteditable="true" data-id="${h.id}" data-field="nombre">${escapeHtml(h.nombre)}</span></td>
+      <td class="hab-cat-cell"><span class="hab-cat-badge" contenteditable="true" data-id="${h.id}" data-field="categoria" style="${badgeStyle}">${h.categoria?escapeHtml(h.categoria):"Sin categoría"}</span></td>
+      ${diasHtml}
+      <td class="hab-completados-cell">${completados}/${totalDias}</td>
+      <td>
+        <div class="hab-progreso-cell">
+          <div class="hab-progreso-track"><div class="hab-progreso-fill" style="width:${pct}%"></div></div>
+          <span class="hab-progreso-pct">${pct.toFixed(1)}%</span>
+        </div>
+      </td>
+      <td><button type="button" class="pend-del hab-del-btn" data-id="${h.id}" title="Eliminar">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+      </button></td>
+    </tr>`;
+  }).join("");
+}
+
+function bindHabitosEvents(){
+  document.getElementById("hab-mes-prev").addEventListener("click",()=>{
+    habState.mes=addMonthsISO(habState.mes,-1);
+    renderHabitos();
+  });
+  document.getElementById("hab-mes-next").addEventListener("click",()=>{
+    habState.mes=addMonthsISO(habState.mes,1);
+    renderHabitos();
+  });
+
+  document.getElementById("hab-copiar-mes-anterior").addEventListener("click",()=>{
+    const base=habitosDelMes(addMonthsISO(habState.mes,-1));
+    const totalDias=daysInMonth(habState.mes);
+    base.forEach(h=>{
+      habitos.push({ id:uid(), mes:habState.mes, nombre:h.nombre, categoria:h.categoria, orden:h.orden, dias:new Array(totalDias).fill(false) });
+    });
+    Storage.setHabitos(habitos);
+    renderHabitos();
+    toast("Hábitos copiados del mes anterior");
+  });
+
+  document.getElementById("form-add-habito").addEventListener("submit",(e)=>{
+    e.preventDefault();
+    const nombre=document.getElementById("hab-nombre").value.trim();
+    const categoria=document.getElementById("hab-categoria").value.trim();
+    if(!nombre) return;
+    const totalDias=daysInMonth(habState.mes);
+    const orden=habitosDelMes(habState.mes).length;
+    habitos.push({ id:uid(), mes:habState.mes, nombre, categoria, orden, dias:new Array(totalDias).fill(false) });
+    Storage.setHabitos(habitos);
+    document.getElementById("hab-nombre").value="";
+    document.getElementById("hab-categoria").value="";
+    renderHabitos();
+  });
+
+  document.getElementById("habitos-body").addEventListener("change",(e)=>{
+    if(e.target.type!=="checkbox") return;
+    const h=habitos.find(x=>x.id===e.target.dataset.id); if(!h) return;
+    const dia=parseInt(e.target.dataset.dia,10);
+    if(!h.dias) h.dias=[];
+    h.dias[dia]=e.target.checked;
+    Storage.setHabitos(habitos);
+
+    const fila=e.target.closest("tr");
+    const totalDias=daysInMonth(habState.mes);
+    const completados=h.dias.filter(Boolean).length;
+    const pct=totalDias? (completados/totalDias*100):0;
+    fila.querySelector(".hab-completados-cell").textContent=`${completados}/${totalDias}`;
+    fila.querySelector(".hab-progreso-fill").style.width=pct+"%";
+    fila.querySelector(".hab-progreso-pct").textContent=pct.toFixed(1)+"%";
+  });
+
+  document.getElementById("habitos-body").addEventListener("click",(e)=>{
+    const delBtn=e.target.closest(".hab-del-btn"); if(!delBtn) return;
+    const h=habitos.find(x=>x.id===delBtn.dataset.id); if(!h) return;
+    showConfirm(`¿Eliminar el hábito "${h.nombre}" de este mes?`, ()=>{
+      habitos=habitos.filter(x=>x.id!==h.id);
+      Storage.setHabitos(habitos);
+      renderHabitos();
+      toast("Hábito eliminado");
+    });
+  });
+
+  document.getElementById("habitos-body").addEventListener("blur",(e)=>{
+    const el=e.target.closest("[data-field]"); if(!el) return;
+    const h=habitos.find(x=>x.id===el.dataset.id); if(!h) return;
+    const campo=el.dataset.field;
+    const valor=el.textContent.trim();
+    if(campo==="nombre"){
+      if(valor===""){ el.textContent=h.nombre; return; }
+      if(valor!==h.nombre){ h.nombre=valor; Storage.setHabitos(habitos); }
+    } else if(campo==="categoria"){
+      if(valor!==(h.categoria||"")){ h.categoria=valor; Storage.setHabitos(habitos); renderHabitos(); }
+    }
+  }, true);
+
+  document.getElementById("habitos-body").addEventListener("keydown",(e)=>{
+    if(e.target.hasAttribute("data-field") && e.key==="Enter"){
+      e.preventDefault();
+      e.target.blur();
+    }
+  });
 }
 
 function updateThemeIcon(theme){
