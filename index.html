@@ -295,6 +295,32 @@ input,select,button{font-family:inherit;font-size:14px;}
 .overdue-date{display:block;font-size:11px;font-weight:700;color:var(--expense);text-transform:capitalize;margin-bottom:1px;}
 .upcoming-date{display:block;font-size:11px;font-weight:700;color:var(--primary);text-transform:capitalize;margin-bottom:1px;}
 
+/* ===== Calendario ===== */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:16px;}
+.cal-weekday{background:var(--surface-2);color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;text-align:center;padding:8px 4px;}
+.cal-day{background:var(--surface);min-height:96px;padding:6px;display:flex;flex-direction:column;gap:4px;cursor:pointer;transition:background .15s;}
+.cal-day:hover{background:var(--surface-2);}
+.cal-day-empty{background:var(--bg);cursor:default;}
+.cal-day-empty:hover{background:var(--bg);}
+.cal-daynum{font-size:12px;font-weight:700;color:var(--text-muted);flex:none;}
+.cal-day.today .cal-daynum{
+  color:#fff;background:var(--primary);width:20px;height:20px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+.cal-events{display:flex;flex-direction:column;gap:2px;overflow:hidden;}
+.cal-event{
+  background:var(--primary-soft);color:var(--primary);font-size:11px;font-weight:600;
+  padding:2px 5px;border-radius:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.cal-event:hover{background:var(--primary);color:#fff;}
+.cal-event-hora{font-weight:700;}
+@media (max-width:700px){
+  .cal-day{min-height:64px;padding:3px;gap:2px;}
+  .cal-daynum{font-size:10px;}
+  .cal-event{font-size:9px;padding:1px 3px;}
+  .cal-weekday{font-size:9px;padding:6px 2px;}
+}
+
 /* ===== Habitos ===== */
 .hab-empty-actions{padding-top:10px;border-top:1px solid var(--border);margin-top:4px;}
 #view-habitos{max-width:1500px;}
@@ -576,11 +602,18 @@ td.nota{white-space:normal;color:var(--text-muted);max-width:220px;}
 </div>
 
 <div id="view-calendario" class="app-main module-view hidden">
-  <div class="card module-empty">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-    <h2>Calendario</h2>
-    <p>Este módulo todavía no tiene datos. Lo construiremos más adelante.</p>
-  </div>
+  <section class="card">
+    <div class="period-nav">
+      <button class="icon-btn" id="cal-mes-prev" title="Mes anterior">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span id="cal-mes-label"></span>
+      <button class="icon-btn" id="cal-mes-next" title="Mes siguiente">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+    <div class="cal-grid" id="cal-grid"></div>
+  </section>
 </div>
 
 <div id="view-habitos" class="app-main module-view hidden">
@@ -697,6 +730,42 @@ td.nota{white-space:normal;color:var(--text-muted);max-width:220px;}
   </div>
 </div>
 
+<div class="modal-overlay hidden" id="modal-evento">
+  <div class="modal confirm-modal">
+    <div class="modal-head">
+      <h2 id="evento-modal-title">Nuevo evento</h2>
+      <button class="icon-btn" id="evento-modal-close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form id="form-evento">
+        <input type="hidden" id="ev-id">
+        <input type="hidden" id="ev-fecha">
+        <div class="field" style="margin-bottom:12px;">
+          <label>Fecha</label>
+          <div id="ev-fecha-label" style="font-weight:700;font-size:14px;"></div>
+        </div>
+        <div class="field" style="margin-bottom:12px;">
+          <label for="ev-hora">Hora (opcional)</label>
+          <input type="time" id="ev-hora">
+        </div>
+        <div class="field">
+          <label for="ev-titulo">Título</label>
+          <input type="text" id="ev-titulo" placeholder="Ej. Reunión con equipo" required>
+        </div>
+        <div class="form-actions" style="justify-content:space-between;margin-top:18px;">
+          <button type="button" class="btn danger hidden" id="ev-delete">Eliminar</button>
+          <div style="display:flex;gap:8px;margin-left:auto;">
+            <button type="button" class="btn secondary" id="ev-cancel">Cancelar</button>
+            <button type="submit" class="btn">Guardar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script>
@@ -704,7 +773,7 @@ td.nota{white-space:normal;color:var(--text-muted);max-width:220px;}
 "use strict";
 
 /* ===== Storage ===== */
-const DB_KEYS = { movs:"finanzas_movimientos", cats:"finanzas_categorias", cfg:"finanzas_config", pend:"pendientes_items", hab:"habitos_items" };
+const DB_KEYS = { movs:"finanzas_movimientos", cats:"finanzas_categorias", cfg:"finanzas_config", pend:"pendientes_items", hab:"habitos_items", cal:"calendario_items" };
 const Storage = {
   getMovimientos(){ try{ return JSON.parse(localStorage.getItem(DB_KEYS.movs)) || []; }catch(e){ return []; } },
   setMovimientos(arr){ localStorage.setItem(DB_KEYS.movs, JSON.stringify(arr)); },
@@ -716,6 +785,8 @@ const Storage = {
   setPendientes(arr){ localStorage.setItem(DB_KEYS.pend, JSON.stringify(arr)); },
   getHabitos(){ try{ return JSON.parse(localStorage.getItem(DB_KEYS.hab)) || []; }catch(e){ return []; } },
   setHabitos(arr){ localStorage.setItem(DB_KEYS.hab, JSON.stringify(arr)); },
+  getCalendario(){ try{ return JSON.parse(localStorage.getItem(DB_KEYS.cal)) || []; }catch(e){ return []; } },
+  setCalendario(arr){ localStorage.setItem(DB_KEYS.cal, JSON.stringify(arr)); },
   isFirstRun(){ return localStorage.getItem(DB_KEYS.cats) === null; }
 };
 
@@ -972,6 +1043,12 @@ const HABITOS_MES_INICIAL = "2026-09";
 function mesActualISO(){ const d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"); }
 const habState = { mes: mesActualISO() < HABITOS_MES_INICIAL ? HABITOS_MES_INICIAL : mesActualISO() };
 
+let calendario = [];
+const CALENDARIO_MES_INICIAL = "2026-09";
+const CALENDARIO_MES_FINAL = "2031-12";
+function clamp(v,min,max){ return v<min ? min : (v>max ? max : v); }
+const calState = { mes: clamp(mesActualISO(), CALENDARIO_MES_INICIAL, CALENDARIO_MES_FINAL) };
+
 function catById(id){ return categorias.find(c=>c.id===id); }
 
 /* ===== Init ===== */
@@ -997,12 +1074,15 @@ function init(){
   populateCategoriaSelect("ingreso");
   pendientes = Storage.getPendientes();
   habitos = Storage.getHabitos();
+  calendario = Storage.getCalendario();
   bindEvents();
   bindPendientesEvents();
   bindHabitosEvents();
+  bindCalendarioEvents();
   render();
   renderPendientes();
   renderHabitos();
+  renderCalendario();
 }
 
 function migrateCategorias(){
@@ -1804,7 +1884,7 @@ function addMonthsISO(mesISO, delta){
   const d=new Date(y, m-1+delta, 1);
   return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0");
 }
-function mesLabelHabitos(mesISO){
+function formatMesLargo(mesISO){
   const [y,m]=mesISO.split("-").map(Number);
   return capitalize(new Date(y,m-1,1).toLocaleDateString("es-ES",{month:"long",year:"numeric"}));
 }
@@ -1812,7 +1892,7 @@ function habitosDelMes(mes){ return habitos.filter(h=>h.mes===mes); }
 
 function renderHabitos(){
   const mes=habState.mes;
-  document.getElementById("hab-mes-label").textContent = mesLabelHabitos(mes);
+  document.getElementById("hab-mes-label").textContent = formatMesLargo(mes);
   document.getElementById("hab-mes-prev").disabled = mes<=HABITOS_MES_INICIAL;
   document.getElementById("hab-mes-next").disabled = mes>=addMonthsISO(mesActualISO(),60);
 
@@ -1940,6 +2020,122 @@ function bindHabitosEvents(){
       e.preventDefault();
       e.target.blur();
     }
+  });
+}
+
+/* ===== Calendario ===== */
+function formatFechaLarga(iso){
+  const d=parseDate(iso);
+  return capitalize(d.toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long",year:"numeric"}));
+}
+
+function renderCalendario(){
+  const mes=calState.mes;
+  document.getElementById("cal-mes-label").textContent = formatMesLargo(mes);
+  document.getElementById("cal-mes-prev").disabled = mes<=CALENDARIO_MES_INICIAL;
+  document.getElementById("cal-mes-next").disabled = mes>=CALENDARIO_MES_FINAL;
+
+  const [y,m]=mes.split("-").map(Number);
+  const primerDia=new Date(y,m-1,1);
+  const totalDias=daysInMonth(mes);
+  const offset=(primerDia.getDay()+6)%7;
+  const hoy=toISODate(new Date());
+
+  let html="";
+  ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"].forEach(d=>{ html+=`<div class="cal-weekday">${d}</div>`; });
+
+  for(let i=0;i<offset;i++) html+=`<div class="cal-day cal-day-empty"></div>`;
+
+  for(let d=1; d<=totalDias; d++){
+    const iso=`${mes}-${String(d).padStart(2,"0")}`;
+    const eventos=calendario.filter(e=>e.fecha===iso).sort((a,b)=>(a.hora||"").localeCompare(b.hora||""));
+    const eventosHtml=eventos.map(e=>`<div class="cal-event" data-id="${e.id}" title="${escapeHtml(e.titulo)}">${e.hora?`<span class="cal-event-hora">${e.hora}</span> `:""}${escapeHtml(e.titulo)}</div>`).join("");
+    html+=`<div class="cal-day ${iso===hoy?"today":""}" data-fecha="${iso}">
+      <div class="cal-daynum">${d}</div>
+      <div class="cal-events">${eventosHtml}</div>
+    </div>`;
+  }
+
+  const trailing=(7-((offset+totalDias)%7))%7;
+  for(let i=0;i<trailing;i++) html+=`<div class="cal-day cal-day-empty"></div>`;
+
+  document.getElementById("cal-grid").innerHTML=html;
+}
+
+function abrirModalEvento(eventoId, fechaNueva){
+  const esEdicion=!!eventoId;
+  const ev = esEdicion ? calendario.find(x=>x.id===eventoId) : null;
+  const fecha = esEdicion ? ev.fecha : fechaNueva;
+
+  document.getElementById("ev-id").value = esEdicion ? ev.id : "";
+  document.getElementById("ev-fecha").value = fecha;
+  document.getElementById("ev-fecha-label").textContent = formatFechaLarga(fecha);
+  document.getElementById("ev-hora").value = esEdicion ? (ev.hora||"") : "";
+  document.getElementById("ev-titulo").value = esEdicion ? ev.titulo : "";
+  document.getElementById("evento-modal-title").textContent = esEdicion ? "Editar evento" : "Nuevo evento";
+  document.getElementById("ev-delete").classList.toggle("hidden", !esEdicion);
+
+  document.getElementById("modal-evento").classList.remove("hidden");
+  setTimeout(()=>document.getElementById("ev-titulo").focus(), 0);
+}
+function cerrarModalEvento(){
+  document.getElementById("modal-evento").classList.add("hidden");
+}
+
+function bindCalendarioEvents(){
+  document.getElementById("cal-mes-prev").addEventListener("click",()=>{
+    calState.mes=addMonthsISO(calState.mes,-1);
+    renderCalendario();
+  });
+  document.getElementById("cal-mes-next").addEventListener("click",()=>{
+    calState.mes=addMonthsISO(calState.mes,1);
+    renderCalendario();
+  });
+
+  document.getElementById("cal-grid").addEventListener("click",(e)=>{
+    const eventoChip=e.target.closest(".cal-event");
+    if(eventoChip){ abrirModalEvento(eventoChip.dataset.id); return; }
+    const dia=e.target.closest(".cal-day:not(.cal-day-empty)");
+    if(dia){ abrirModalEvento(null, dia.dataset.fecha); }
+  });
+
+  document.getElementById("evento-modal-close").addEventListener("click", cerrarModalEvento);
+  document.getElementById("ev-cancel").addEventListener("click", cerrarModalEvento);
+  document.getElementById("modal-evento").addEventListener("click",(e)=>{
+    if(e.target.id==="modal-evento") cerrarModalEvento();
+  });
+
+  document.getElementById("form-evento").addEventListener("submit",(e)=>{
+    e.preventDefault();
+    const id=document.getElementById("ev-id").value;
+    const fecha=document.getElementById("ev-fecha").value;
+    const hora=document.getElementById("ev-hora").value;
+    const titulo=document.getElementById("ev-titulo").value.trim();
+    if(!titulo) return;
+    if(id){
+      const ev=calendario.find(x=>x.id===id);
+      ev.hora=hora; ev.titulo=titulo;
+      toast("Evento actualizado");
+    } else {
+      calendario.push({ id:uid(), fecha, hora, titulo });
+      toast("Evento agregado");
+    }
+    Storage.setCalendario(calendario);
+    cerrarModalEvento();
+    renderCalendario();
+  });
+
+  document.getElementById("ev-delete").addEventListener("click",()=>{
+    const id=document.getElementById("ev-id").value;
+    const ev=calendario.find(x=>x.id===id);
+    if(!ev) return;
+    cerrarModalEvento();
+    showConfirm(`¿Eliminar "${ev.titulo}"?`, ()=>{
+      calendario=calendario.filter(x=>x.id!==id);
+      Storage.setCalendario(calendario);
+      renderCalendario();
+      toast("Evento eliminado");
+    });
   });
 }
 
