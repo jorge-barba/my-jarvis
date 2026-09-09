@@ -297,15 +297,15 @@ input,select,button{font-family:inherit;font-size:14px;}
 
 /* ===== Habitos ===== */
 .hab-empty-actions{padding-top:10px;border-top:1px solid var(--border);margin-top:4px;}
-#tabla-habitos{min-width:100%;}
-#tabla-habitos .hab-day-th,#tabla-habitos .hab-day-cell{padding:6px 3px;text-align:center;white-space:normal;}
+#view-habitos{max-width:1500px;}
+#tabla-habitos{min-width:100%;font-size:12px;}
+#tabla-habitos th,#tabla-habitos td{padding:8px 6px;}
+#tabla-habitos .hab-day-th,#tabla-habitos .hab-day-cell{padding:5px 1px;text-align:center;white-space:normal;}
 .hab-day-th .dnum{display:block;font-size:11px;font-weight:700;color:var(--text);}
 .hab-day-th .dabbr{display:block;font-size:9px;color:var(--text-faint);text-transform:lowercase;}
-.hab-day-cell input[type="checkbox"]{width:16px;height:16px;accent-color:var(--income);cursor:pointer;}
+.hab-day-cell input[type="checkbox"]{width:14px;height:14px;accent-color:var(--income);cursor:pointer;}
 .hab-num-cell{color:var(--text-faint);}
-.hab-nombre-cell{outline:none;min-width:130px;}
-.hab-cat-cell{outline:none;}
-.hab-cat-badge{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11px;font-weight:600;white-space:nowrap;}
+.hab-nombre-cell{outline:none;min-width:120px;}
 .hab-completados-cell{color:var(--text-muted);font-variant-numeric:tabular-nums;}
 .hab-progreso-cell{display:flex;align-items:center;gap:8px;min-width:110px;}
 .hab-progreso-track{flex:1;height:8px;background:var(--surface-2);border-radius:999px;overflow:hidden;}
@@ -612,7 +612,6 @@ td.nota{white-space:normal;color:var(--text-muted);max-width:220px;}
     </div>
     <form id="form-add-habito" class="pend-add-form">
       <input type="text" id="hab-nombre" placeholder="Nombre del hábito" required>
-      <input type="text" id="hab-categoria" placeholder="Categoría (opcional)">
       <button type="submit" class="btn">Agregar hábito</button>
     </form>
   </section>
@@ -1809,13 +1808,6 @@ function mesLabelHabitos(mesISO){
   const [y,m]=mesISO.split("-").map(Number);
   return capitalize(new Date(y,m-1,1).toLocaleDateString("es-ES",{month:"long",year:"numeric"}));
 }
-function categoriaColor(nombre){
-  if(!nombre) return null;
-  const paleta=["#3b82f6","#8b5cf6","#f59e0b","#14b8a6","#64748b","#ec4899","#22c55e","#eab308"];
-  let hash=0;
-  for(let i=0;i<nombre.length;i++) hash=(hash*31+nombre.charCodeAt(i))>>>0;
-  return paleta[hash % paleta.length];
-}
 function habitosDelMes(mes){ return habitos.filter(h=>h.mes===mes); }
 
 function renderHabitos(){
@@ -1828,7 +1820,7 @@ function renderHabitos(){
   const items=habitosDelMes(mes).sort((a,b)=>a.orden-b.orden);
 
   const headRow=document.getElementById("habitos-head-row");
-  let headHtml=`<th>N°</th><th>Hábito</th><th>Categoría</th>`;
+  let headHtml=`<th>N°</th><th>Hábito</th>`;
   for(let d=1; d<=totalDias; d++){
     const fecha=new Date(Number(mes.split("-")[0]), Number(mes.split("-")[1])-1, d);
     const abbr=fecha.toLocaleDateString("es-ES",{weekday:"short"}).replace(".","").toLowerCase();
@@ -1841,7 +1833,7 @@ function renderHabitos(){
   const emptyActions=document.getElementById("hab-empty-actions");
 
   if(items.length===0){
-    body.innerHTML=`<tr><td colspan="${6+totalDias}" class="empty-note">No hay hábitos configurados para este mes.</td></tr>`;
+    body.innerHTML=`<tr><td colspan="${5+totalDias}" class="empty-note">No hay hábitos configurados para este mes.</td></tr>`;
     const hayAnterior=habitosDelMes(addMonthsISO(mes,-1)).length>0;
     emptyActions.hidden=!hayAnterior;
     return;
@@ -1856,12 +1848,9 @@ function renderHabitos(){
     for(let d=0; d<totalDias; d++){
       diasHtml+=`<td class="hab-day-cell"><input type="checkbox" data-id="${h.id}" data-dia="${d}" ${dias[d]?"checked":""}></td>`;
     }
-    const color=categoriaColor(h.categoria);
-    const badgeStyle = color ? `background:${color}22;color:${color}` : `background:var(--surface-2);color:var(--text-faint)`;
     return `<tr data-id="${h.id}">
       <td class="hab-num-cell">${idx+1}</td>
-      <td><span class="hab-nombre-cell" contenteditable="true" data-id="${h.id}" data-field="nombre">${escapeHtml(h.nombre)}</span></td>
-      <td class="hab-cat-cell"><span class="hab-cat-badge" contenteditable="true" data-id="${h.id}" data-field="categoria" style="${badgeStyle}">${h.categoria?escapeHtml(h.categoria):"Sin categoría"}</span></td>
+      <td><span class="hab-nombre-cell" contenteditable="true" data-id="${h.id}">${escapeHtml(h.nombre)}</span></td>
       ${diasHtml}
       <td class="hab-completados-cell">${completados}/${totalDias}</td>
       <td>
@@ -1891,7 +1880,7 @@ function bindHabitosEvents(){
     const base=habitosDelMes(addMonthsISO(habState.mes,-1));
     const totalDias=daysInMonth(habState.mes);
     base.forEach(h=>{
-      habitos.push({ id:uid(), mes:habState.mes, nombre:h.nombre, categoria:h.categoria, orden:h.orden, dias:new Array(totalDias).fill(false) });
+      habitos.push({ id:uid(), mes:habState.mes, nombre:h.nombre, orden:h.orden, dias:new Array(totalDias).fill(false) });
     });
     Storage.setHabitos(habitos);
     renderHabitos();
@@ -1901,14 +1890,12 @@ function bindHabitosEvents(){
   document.getElementById("form-add-habito").addEventListener("submit",(e)=>{
     e.preventDefault();
     const nombre=document.getElementById("hab-nombre").value.trim();
-    const categoria=document.getElementById("hab-categoria").value.trim();
     if(!nombre) return;
     const totalDias=daysInMonth(habState.mes);
     const orden=habitosDelMes(habState.mes).length;
-    habitos.push({ id:uid(), mes:habState.mes, nombre, categoria, orden, dias:new Array(totalDias).fill(false) });
+    habitos.push({ id:uid(), mes:habState.mes, nombre, orden, dias:new Array(totalDias).fill(false) });
     Storage.setHabitos(habitos);
     document.getElementById("hab-nombre").value="";
-    document.getElementById("hab-categoria").value="";
     renderHabitos();
   });
 
@@ -1941,20 +1928,15 @@ function bindHabitosEvents(){
   });
 
   document.getElementById("habitos-body").addEventListener("blur",(e)=>{
-    const el=e.target.closest("[data-field]"); if(!el) return;
+    const el=e.target.closest(".hab-nombre-cell"); if(!el) return;
     const h=habitos.find(x=>x.id===el.dataset.id); if(!h) return;
-    const campo=el.dataset.field;
     const valor=el.textContent.trim();
-    if(campo==="nombre"){
-      if(valor===""){ el.textContent=h.nombre; return; }
-      if(valor!==h.nombre){ h.nombre=valor; Storage.setHabitos(habitos); }
-    } else if(campo==="categoria"){
-      if(valor!==(h.categoria||"")){ h.categoria=valor; Storage.setHabitos(habitos); renderHabitos(); }
-    }
+    if(valor===""){ el.textContent=h.nombre; return; }
+    if(valor!==h.nombre){ h.nombre=valor; Storage.setHabitos(habitos); }
   }, true);
 
   document.getElementById("habitos-body").addEventListener("keydown",(e)=>{
-    if(e.target.hasAttribute("data-field") && e.key==="Enter"){
+    if(e.target.classList.contains("hab-nombre-cell") && e.key==="Enter"){
       e.preventDefault();
       e.target.blur();
     }
