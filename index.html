@@ -1814,7 +1814,7 @@ function renderHabitos(){
   const mes=habState.mes;
   document.getElementById("hab-mes-label").textContent = mesLabelHabitos(mes);
   document.getElementById("hab-mes-prev").disabled = mes<=HABITOS_MES_INICIAL;
-  document.getElementById("hab-mes-next").disabled = mes>=addMonthsISO(mesActualISO(),1);
+  document.getElementById("hab-mes-next").disabled = mes>=addMonthsISO(mesActualISO(),60);
 
   const totalDias=daysInMonth(mes);
   const items=habitosDelMes(mes).sort((a,b)=>a.orden-b.orden);
