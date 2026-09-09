@@ -296,7 +296,12 @@ input,select,button{font-family:inherit;font-size:14px;}
 .upcoming-date{display:block;font-size:11px;font-weight:700;color:var(--primary);text-transform:capitalize;margin-bottom:1px;}
 
 /* ===== Calendario ===== */
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-top:16px;}
+.cal-weekday-header{display:grid;grid-template-columns:repeat(7,1fr);margin:16px 0 18px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);}
+.cal-scroll{display:flex;flex-direction:column;}
+.cal-month-section{margin-bottom:22px;}
+.cal-month-title{font-size:14px;font-weight:700;color:var(--text);margin:0 0 8px;}
+#cal-sentinel{height:1px;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
 .cal-weekday{background:var(--surface-2);color:var(--text-muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.03em;text-align:center;padding:8px 4px;}
 .cal-day{background:var(--surface);min-height:96px;padding:6px;display:flex;flex-direction:column;gap:4px;cursor:pointer;transition:background .15s;}
 .cal-day:hover{background:var(--surface-2);}
@@ -612,7 +617,10 @@ td.nota{white-space:normal;color:var(--text-muted);max-width:220px;}
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
     </div>
-    <div class="cal-grid" id="cal-grid"></div>
+    <div class="cal-weekday-header" id="cal-weekday-header"></div>
+    <div class="cal-scroll" id="cal-scroll">
+      <div id="cal-sentinel"></div>
+    </div>
   </section>
 </div>
 
@@ -1082,7 +1090,7 @@ function init(){
   render();
   renderPendientes();
   renderHabitos();
-  renderCalendario();
+  iniciarCalendario();
 }
 
 function migrateCategorias(){
@@ -1436,6 +1444,7 @@ function renderCatLists(){
 function switchModule(name){
   document.querySelectorAll(".module-view").forEach(v=>v.classList.toggle("hidden", v.id!=="view-"+name));
   document.querySelectorAll(".bn-item").forEach(b=>b.classList.toggle("active", b.dataset.module===name));
+  if(name==="calendario"){ verificarCargaCalendario(); actualizarEtiquetaCalendarioPorScroll(); }
 }
 
 function bindEvents(){
@@ -2029,12 +2038,7 @@ function formatFechaLarga(iso){
   return capitalize(d.toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long",year:"numeric"}));
 }
 
-function renderCalendario(){
-  const mes=calState.mes;
-  document.getElementById("cal-mes-label").textContent = formatMesLargo(mes);
-  document.getElementById("cal-mes-prev").disabled = mes<=CALENDARIO_MES_INICIAL;
-  document.getElementById("cal-mes-next").disabled = mes>=CALENDARIO_MES_FINAL;
-
+function buildMonthGridHtml(mes){
   const [y,m]=mes.split("-").map(Number);
   const primerDia=new Date(y,m-1,1);
   const totalDias=daysInMonth(mes);
@@ -2042,10 +2046,7 @@ function renderCalendario(){
   const hoy=toISODate(new Date());
 
   let html="";
-  ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"].forEach(d=>{ html+=`<div class="cal-weekday">${d}</div>`; });
-
   for(let i=0;i<offset;i++) html+=`<div class="cal-day cal-day-empty"></div>`;
-
   for(let d=1; d<=totalDias; d++){
     const iso=`${mes}-${String(d).padStart(2,"0")}`;
     const eventos=calendario.filter(e=>e.fecha===iso).sort((a,b)=>(a.hora||"").localeCompare(b.hora||""));
@@ -2055,11 +2056,100 @@ function renderCalendario(){
       <div class="cal-events">${eventosHtml}</div>
     </div>`;
   }
-
   const trailing=(7-((offset+totalDias)%7))%7;
   for(let i=0;i<trailing;i++) html+=`<div class="cal-day cal-day-empty"></div>`;
+  return html;
+}
 
-  document.getElementById("cal-grid").innerHTML=html;
+let calMesesCargados=[];
+
+function crearSeccionMes(mes){
+  const section=document.createElement("div");
+  section.className="cal-month-section";
+  section.dataset.mes=mes;
+  section.innerHTML=`<div class="cal-month-title">${formatMesLargo(mes)}</div><div class="cal-grid">${buildMonthGridHtml(mes)}</div>`;
+  return section;
+}
+
+function agregarMesCalendario(mes){
+  if(mes>CALENDARIO_MES_FINAL || mes<CALENDARIO_MES_INICIAL) return null;
+  if(calMesesCargados.includes(mes)) return null;
+  calMesesCargados.push(mes);
+  const section=crearSeccionMes(mes);
+  document.getElementById("cal-scroll").insertBefore(section, document.getElementById("cal-sentinel"));
+  return section;
+}
+
+function prependMesCalendario(mes){
+  if(mes<CALENDARIO_MES_INICIAL) return null;
+  if(calMesesCargados.includes(mes)) return null;
+  calMesesCargados.unshift(mes);
+  const section=crearSeccionMes(mes);
+  const scroll=document.getElementById("cal-scroll");
+  scroll.insertBefore(section, scroll.firstChild);
+  return section;
+}
+
+function refrescarMesCalendario(mes){
+  const grid=document.querySelector(`.cal-month-section[data-mes="${mes}"] .cal-grid`);
+  if(grid) grid.innerHTML=buildMonthGridHtml(mes);
+}
+
+function actualizarBotonesCalendario(){
+  document.getElementById("cal-mes-prev").disabled = calMesesCargados[0]<=CALENDARIO_MES_INICIAL;
+  document.getElementById("cal-mes-next").disabled = calMesesCargados[calMesesCargados.length-1]>=CALENDARIO_MES_FINAL;
+}
+
+function actualizarEtiquetaCalendarioPorScroll(){
+  const secciones=document.querySelectorAll(".cal-month-section");
+  const refY=140;
+  let actual=null, mejorDist=Infinity;
+  secciones.forEach(sec=>{
+    const rect=sec.getBoundingClientRect();
+    const dist = rect.top<=refY && rect.bottom>refY ? 0 : Math.min(Math.abs(rect.top-refY), Math.abs(rect.bottom-refY));
+    if(dist<mejorDist){ mejorDist=dist; actual=sec.dataset.mes; }
+  });
+  if(actual && actual!==calState.mes){
+    calState.mes=actual;
+    document.getElementById("cal-mes-label").textContent=formatMesLargo(actual);
+    actualizarBotonesCalendario();
+  }
+}
+
+function verificarCargaCalendario(){
+  const sentinel=document.getElementById("cal-sentinel");
+  const alto=window.innerHeight || document.documentElement.clientHeight || 800;
+  if(sentinel.getBoundingClientRect().top < alto + 600){
+    const ultimo=calMesesCargados[calMesesCargados.length-1];
+    if(agregarMesCalendario(addMonthsISO(ultimo,1))) actualizarBotonesCalendario();
+  }
+}
+
+let calScrollTimer=null;
+function onScrollCalendario(){
+  if(document.getElementById("view-calendario").classList.contains("hidden")) return;
+  if(calScrollTimer) return;
+  calScrollTimer=setTimeout(()=>{
+    actualizarEtiquetaCalendarioPorScroll();
+    verificarCargaCalendario();
+    calScrollTimer=null;
+  }, 100);
+}
+
+function iniciarCalendario(){
+  let html="";
+  ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"].forEach(d=>{ html+=`<div class="cal-weekday">${d}</div>`; });
+  document.getElementById("cal-weekday-header").innerHTML=html;
+
+  calMesesCargados=[];
+  document.getElementById("cal-scroll").querySelectorAll(".cal-month-section").forEach(s=>s.remove());
+
+  agregarMesCalendario(calState.mes);
+  agregarMesCalendario(addMonthsISO(calState.mes,1));
+  document.getElementById("cal-mes-label").textContent=formatMesLargo(calState.mes);
+  actualizarBotonesCalendario();
+
+  window.addEventListener("scroll", onScrollCalendario, { passive:true });
 }
 
 function abrirModalEvento(eventoId, fechaNueva){
@@ -2084,15 +2174,18 @@ function cerrarModalEvento(){
 
 function bindCalendarioEvents(){
   document.getElementById("cal-mes-prev").addEventListener("click",()=>{
-    calState.mes=addMonthsISO(calState.mes,-1);
-    renderCalendario();
+    const primero=calMesesCargados[0];
+    const section=prependMesCalendario(addMonthsISO(primero,-1));
+    if(section){ actualizarBotonesCalendario(); section.scrollIntoView({behavior:"smooth", block:"start"}); }
   });
   document.getElementById("cal-mes-next").addEventListener("click",()=>{
-    calState.mes=addMonthsISO(calState.mes,1);
-    renderCalendario();
+    const ultimo=calMesesCargados[calMesesCargados.length-1];
+    const siguiente=addMonthsISO(ultimo,1);
+    const section=agregarMesCalendario(siguiente) || document.querySelector(`.cal-month-section[data-mes="${siguiente}"]`);
+    if(section){ actualizarBotonesCalendario(); section.scrollIntoView({behavior:"smooth", block:"start"}); }
   });
 
-  document.getElementById("cal-grid").addEventListener("click",(e)=>{
+  document.getElementById("cal-scroll").addEventListener("click",(e)=>{
     const eventoChip=e.target.closest(".cal-event");
     if(eventoChip){ abrirModalEvento(eventoChip.dataset.id); return; }
     const dia=e.target.closest(".cal-day:not(.cal-day-empty)");
@@ -2122,7 +2215,7 @@ function bindCalendarioEvents(){
     }
     Storage.setCalendario(calendario);
     cerrarModalEvento();
-    renderCalendario();
+    refrescarMesCalendario(fecha.slice(0,7));
   });
 
   document.getElementById("ev-delete").addEventListener("click",()=>{
@@ -2133,7 +2226,7 @@ function bindCalendarioEvents(){
     showConfirm(`¿Eliminar "${ev.titulo}"?`, ()=>{
       calendario=calendario.filter(x=>x.id!==id);
       Storage.setCalendario(calendario);
-      renderCalendario();
+      refrescarMesCalendario(ev.fecha.slice(0,7));
       toast("Evento eliminado");
     });
   });
