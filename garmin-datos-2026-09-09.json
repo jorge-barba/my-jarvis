@@ -5,7 +5,8 @@
     "alturaCm": 172,
     "pesoKg": 65,
     "vo2maxAutoreportado": 42,
-    "maxHrReferencia": 205
+    "maxHrReferencia": 205,
+    "fuentePRs": "Strava"
   },
   "carga": [
     {
@@ -2065,6 +2066,85 @@
       "ritmoMinKm": 4.96,
       "pctMaxHr": 91.2,
       "esfuerzo": "Calidad"
+    }
+  ],
+  "prs": [
+    {
+      "distancia": "400 m",
+      "segundos": 117,
+      "ritmoMinKm": 4.88,
+      "fecha": "2026-05-09",
+      "actividad": "Celaya Carrera (tramo final)"
+    },
+    {
+      "distancia": "1/2 milla",
+      "segundos": 238,
+      "ritmoMinKm": 4.93,
+      "fecha": "2026-05-09",
+      "actividad": "Celaya Carrera (tramo final)"
+    },
+    {
+      "distancia": "1 km",
+      "segundos": 297,
+      "ritmoMinKm": 4.95,
+      "fecha": "2026-05-09",
+      "actividad": "Celaya Carrera (tramo final)"
+    },
+    {
+      "distancia": "1 milla",
+      "segundos": 573,
+      "ritmoMinKm": 5.93,
+      "fecha": "2026-02-02",
+      "actividad": "Celaya Carrera"
+    },
+    {
+      "distancia": "2 millas",
+      "segundos": 1222,
+      "ritmoMinKm": 6.33,
+      "fecha": "2026-02-02",
+      "actividad": "Celaya Carrera"
+    },
+    {
+      "distancia": "5 km",
+      "segundos": 1917,
+      "ritmoMinKm": 6.39,
+      "fecha": "2026-02-02",
+      "actividad": "Celaya Carrera"
+    },
+    {
+      "distancia": "10 km",
+      "segundos": 4146,
+      "ritmoMinKm": 6.91,
+      "fecha": "2026-04-26",
+      "actividad": "Medio Maraton Leon 2026"
+    },
+    {
+      "distancia": "15 km",
+      "segundos": 6264,
+      "ritmoMinKm": 6.96,
+      "fecha": "2026-04-26",
+      "actividad": "Medio Maraton Leon 2026"
+    },
+    {
+      "distancia": "10 millas",
+      "segundos": 6718,
+      "ritmoMinKm": 6.96,
+      "fecha": "2026-04-26",
+      "actividad": "Medio Maraton Leon 2026"
+    },
+    {
+      "distancia": "20 km",
+      "segundos": 8439,
+      "ritmoMinKm": 7.03,
+      "fecha": "2026-04-26",
+      "actividad": "Medio Maraton Leon 2026"
+    },
+    {
+      "distancia": "Medio Maraton",
+      "segundos": 8929,
+      "ritmoMinKm": 7.05,
+      "fecha": "2026-04-26",
+      "actividad": "Medio Maraton Leon 2026"
     }
   ]
 }

@@ -590,10 +590,10 @@ td.nota{white-space:normal;color:var(--text-muted);max-width:220px;}
   <div class="card module-empty" id="ejer-empty">
     <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
     <h2>Ejercicio</h2>
-    <p>Importa tus datos de Garmin (obtenidos por chat) para ver tu panel de entrenamiento.</p>
+    <p>Importa tus datos de Garmin y Strava (obtenidos por chat) para ver tu panel de entrenamiento.</p>
     <div class="hab-empty-actions" style="border-top:none;padding-top:0;">
       <input type="file" id="input-import-garmin-empty" accept="application/json" class="hidden">
-      <button class="btn" id="btn-import-garmin-empty">Importar datos de Garmin</button>
+      <button class="btn" id="btn-import-garmin-empty">Importar datos de entrenamiento</button>
     </div>
   </div>
 
@@ -709,17 +709,32 @@ td.nota{white-space:normal;color:var(--text-muted);max-width:220px;}
       <div class="ejer-hint" id="ejer-hint"></div>
     </section>
 
+    <section class="card" id="ejer-prs-card">
+      <div class="table-header">
+        <h2>Récords personales</h2>
+        <span class="ejer-mini-note" style="margin:0;">Fuente: Strava</span>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Distancia</th><th>Marca</th><th>Ritmo</th><th>Fecha</th><th>Carrera</th></tr>
+          </thead>
+          <tbody id="ejer-tabla-prs"></tbody>
+        </table>
+      </div>
+    </section>
+
     <section class="card">
       <div class="data-actions">
         <div class="row">
-          <div><strong>Importar datos de Garmin</strong><p>Reemplaza los datos actuales con un archivo JSON exportado desde el chat.</p></div>
+          <div><strong>Importar datos de entrenamiento</strong><p>Reemplaza los datos actuales con un archivo JSON exportado desde el chat (Garmin + Strava).</p></div>
           <div>
             <input type="file" id="input-import-garmin" accept="application/json" class="hidden">
             <button class="btn secondary" id="btn-import-garmin">Importar JSON</button>
           </div>
         </div>
         <div class="row">
-          <div><strong>Exportar datos de Garmin</strong><p>Descarga los datos actuales de entrenamiento en un archivo JSON.</p></div>
+          <div><strong>Exportar datos de entrenamiento</strong><p>Descarga los datos actuales de entrenamiento en un archivo JSON.</p></div>
           <button class="btn secondary" id="btn-export-garmin">Exportar JSON</button>
         </div>
       </div>
@@ -2806,6 +2821,29 @@ function renderTablaRitmos(actividades){
     : `${suaves} de ${total} carreras registradas fueron realmente suaves (menos del 65% de tu FC máx.).`);
 }
 
+function formatTiempoPR(segundos){
+  const h=Math.floor(segundos/3600), m=Math.floor((segundos%3600)/60), s=Math.round(segundos%60);
+  if(h>0) return `${h}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+  return `${m}:${String(s).padStart(2,"0")}`;
+}
+
+function renderTablaPRs(prs){
+  const card=document.getElementById("ejer-prs-card");
+  const tbody=document.getElementById("ejer-tabla-prs");
+  if(!prs || !prs.length){ card.classList.add("hidden"); return; }
+  card.classList.remove("hidden");
+  tbody.innerHTML=prs.map(p=>{
+    const [y,m,d]=p.fecha.split("-");
+    return `<tr>
+      <td>${escapeHtml(p.distancia)}</td>
+      <td>${formatTiempoPR(p.segundos)}</td>
+      <td>${formatRitmo(p.ritmoMinKm)}</td>
+      <td>${d}/${m}/${y}</td>
+      <td>${escapeHtml(p.actividad)}</td>
+    </tr>`;
+  }).join("");
+}
+
 function renderEjercicio(){
   const empty=document.getElementById("ejer-empty");
   const content=document.getElementById("ejer-content");
@@ -2827,6 +2865,7 @@ function renderEjercicio(){
   renderSuenoChart(garminData.sueno||[]);
   renderTablaCarreras(garminData.actividades||[]);
   renderTablaRitmos(garminData.actividades||[]);
+  renderTablaPRs(garminData.prs||[]);
 }
 
 function validarGarminData(data){
